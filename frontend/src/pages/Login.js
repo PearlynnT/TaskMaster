@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useContext } from "react";
 import AuthContext from "./context/AuthProvider";
+import axios from "../api/axios";
 
-import axios from "./api/axios";
 const LOGIN_URL = "/login";
 
 function Login() {
@@ -34,8 +34,7 @@ function Login() {
                 }
             );
             const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
-            setAuth({ user, pwd, roles, accessToken });
+            setAuth({ user, pwd, accessToken });
             setUser('');
             setPwd('');
             setSuccess(true);
@@ -81,13 +80,13 @@ function Login() {
                             required
                         />
                         <button>Sign In</button>
-                        <p>
-                            <span className="login--hyperlink">
-                                {/*put router link here*/}
-                                <a href="todo">Don't have an account? Click here to register for one.</a>
-                            </span>
-                        </p>
                     </form>
+                    <p>
+                        <span className="login--hyperlink">
+                            {/*put router link here*/}
+                            <a href="todo">Don't have an account? Click here to register for one.</a>
+                        </span>
+                    </p>
                 </section>
             )}
         </>
