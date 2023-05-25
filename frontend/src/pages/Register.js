@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes, faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import axios from '../api/axios';
+import { Link } from "react-router-dom";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -75,7 +76,7 @@ function Register() {
             { success ? (
                 <section>
                     <h1>Successfully registered!</h1>
-                    <p><a href="#">Login</a></p>
+                    <p><a href="login">Login</a></p>
                 </section>
             ) : (
                 <section>
@@ -154,9 +155,8 @@ function Register() {
                         <button disabled={!validName || !validPwd || !validMatch ? true : false}>Register</button>
                     </form>
                     <p>
-                        <span className="register--hyperlink">
-                            {/*put router link here*/}
-                            <a href="todo">Already have an account? Click here to login.</a>
+                        <span className="register--link">
+                            <Link to="/">Already have an account? Click here to login.</Link>
                         </span>
                     </p>
                 </section>

@@ -1,0 +1,12 @@
+20230526	02:27:34	b8d2b5fc-60d5-426e-84bd-5c724e6fffab	OPTIONS	http://localhost:3000	/register
+20230526	02:27:34	91318603-3953-4b37-87c4-b9d16c0842d7	POST	http://localhost:3000	/register
+20230526	02:28:57	8189fcec-36a6-42a1-a1e3-37016f0d5a5b	OPTIONS	http://localhost:3000	/login
+20230526	02:28:57	0037c0d3-490b-4f17-a5a0-1b6688ca94f9	POST	http://localhost:3000	/login
+20230526	02:29:40	c426811e-8be4-48ab-bb58-f27ddcf6172c	OPTIONS	http://localhost:3000	/login
+20230526	02:29:40	d8958288-883b-44db-91cb-cba7a7904366	POST	http://localhost:3000	/login
+20230526	02:31:00	3a1db585-d3c0-40f9-974a-ec31f45ed6e3	OPTIONS	http://localhost:3000	/register
+20230526	02:31:00	0bf356b7-b974-4b5b-a9ac-36047ecdd9cc	POST	http://localhost:3000	/register
+20230526	02:33:51	9acbb5e9-7caa-43fd-9d75-a9c8e3959d27	OPTIONS	http://localhost:3000	/register
+20230526	02:33:51	f8bb2ef0-b8e0-4675-9740-1e2f5f482467	POST	http://localhost:3000	/register
+20230526	02:34:13	5ddfb6a6-d122-493e-95c5-addf50b5d46b	OPTIONS	http://localhost:3000	/register
+20230526	02:34:13	b9710446-8d53-4244-8157-1ccf240c1db0	POST	http://localhost:3000	/register

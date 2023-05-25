@@ -1,18 +1,23 @@
-import { useRef, useState, useEffect, useContext } from "react";
-import AuthContext from "./context/AuthProvider";
+import { useRef, useState, useEffect } from "react";
+import useAuth from '../hooks/useAuth';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from "../api/axios";
 
 const LOGIN_URL = "/login";
 
 function Login() {
-    const { setAuth } = useContext(AuthContext);
+    const { setAuth } = useAuth();
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
     const userRef = useRef();
     const errRef = useRef();
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         userRef.current.focus();
@@ -37,7 +42,7 @@ function Login() {
             setAuth({ user, pwd, accessToken });
             setUser('');
             setPwd('');
-            setSuccess(true);
+            navigate(from, { replace: true });
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -53,43 +58,36 @@ function Login() {
     }
 
     return (
-        <>
-            {success ? (
-                <h1>Landing page</h1>
-            ) : (
-                <section>
-                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <h1>Login</h1>
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            type="text"
-                            id="username"
-                            placeholder="Username"
-                            ref={userRef}
-                            autoComplete="off"
-                            onChange={event => setUser(event.target.value)}
-                            value={user}
-                            required
-                        />
-                        <input
-                            type="password"
-                            id="password"
-                            placeholder="Password"
-                            onChange={event => setPwd(event.target.value)}
-                            value={pwd}
-                            required
-                        />
-                        <button>Sign In</button>
-                    </form>
-                    <p>
-                        <span className="login--hyperlink">
-                            {/*put router link here*/}
-                            <a href="todo">Don't have an account? Click here to register for one.</a>
-                        </span>
-                    </p>
-                </section>
-            )}
-        </>
+        <section>
+            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+            <h1>Login</h1>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="Username"
+                    ref={userRef}
+                    autoComplete="off"
+                    onChange={event => setUser(event.target.value)}
+                    value={user}
+                    required
+                />
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    onChange={event => setPwd(event.target.value)}
+                    value={pwd}
+                    required
+                />
+                <button>Sign In</button>
+            </form>
+            <p>
+                <span className="login--link">
+                    <Link to="/register">Don't have an account? Click here to register for one.</Link>
+                </span>
+            </p>
+        </section>
     )
 }
 

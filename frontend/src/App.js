@@ -1,22 +1,24 @@
-import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Home from './pages/Home';
+import Layout from './components/Layout';
+import RequireAuth from './components/RequireAuth';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        {/* public routes */}
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+
+        {/* protected routes */}
+        <Route element={<RequireAuth />}>
+          <Route path="/" element={<Home />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 
