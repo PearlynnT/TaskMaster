@@ -9,9 +9,12 @@ backend/node_modules
 
 # testing
 /coverage
+backend/logs/reqLog.txt
 
 # production
 /build
+frontend/build
+backend/build
 
 # misc
 .DS_Store
