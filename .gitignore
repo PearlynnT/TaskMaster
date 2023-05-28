@@ -9,7 +9,7 @@ backend/node_modules
 
 # testing
 /coverage
-backend/logs/reqLog.txt
+backend/logs
 
 # production
 /build
