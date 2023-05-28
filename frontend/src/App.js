@@ -3,6 +3,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Layout from './components/Layout';
+import PersistLogin from './components/PersistLogin';
 import RequireAuth from './components/RequireAuth';
 
 function App() {
@@ -14,8 +15,10 @@ function App() {
         <Route path="register" element={<Register />} />
 
         {/* protected routes */}
-        <Route element={<RequireAuth />}>
-          <Route path="/" element={<Home />} />
+        <Route element={<PersistLogin />}>
+          <Route element={<RequireAuth />}>
+            <Route path="/" element={<Home />} />
+          </Route>
         </Route>
       </Route>
     </Routes>
