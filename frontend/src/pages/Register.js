@@ -76,7 +76,11 @@ function Register() {
             { success ? (
                 <section>
                     <h1>Successfully registered!</h1>
-                    <p><a href="login">Login</a></p>
+                    <p>
+                        <span className="register--link">
+                            <Link to="/">Login</Link>
+                        </span>
+                    </p>
                 </section>
             ) : (
                 <section>
