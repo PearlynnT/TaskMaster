@@ -1,28 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
-import useAuth from '../hooks/useAuth';
-//import useLogout from "../hooks/useLogout";
+import useLogout from "../hooks/useLogout";
+//import Tasks from "../components/Tasks"
 
 function Home() {
-    const { setAuth } = useAuth();
     const navigate = useNavigate();
-    //const logout = useLogout();
+    const logout = useLogout();
 
-    const logout = async () => {
-        // todo
-        setAuth({});
+    const signOut = async () => {
+        await logout();
         navigate('/login');
     }
-
-    // const signOut = async () => {
-    //     await logout();
-    //     navigate('/login');
-    // }
 
     return (
         <>
             <h1>Landing Page</h1>
             <div className="logoutBtn">
-                <button onClick={logout}>Logout</button>
+                <button onClick={signOut}>Logout</button>
             </div>
         </>
     )
