@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom"
 
 function Layout() {
     return (
-        <main className="App">
+        <main className = 'App'>
             <Outlet />
         </main>
     )

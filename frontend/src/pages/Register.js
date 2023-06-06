@@ -4,6 +4,7 @@ import { faCheck, faTimes, faCircleExclamation } from "@fortawesome/free-solid-s
 import axios from '../api/axios';
 import { Link } from "react-router-dom";
 
+
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = '/register';
@@ -74,7 +75,7 @@ function Register() {
     return (
         <>
             { success ? (
-                <section>
+                <section className = "register--successful">
                     <h1>Successfully registered!</h1>
                     <p>
                         <span className="register--link">
@@ -83,7 +84,7 @@ function Register() {
                     </p>
                 </section>
             ) : (
-                <section>
+                <section className = "register--notsuccessful">
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1>Register</h1>
                     <form onSubmit={handleSubmit}>

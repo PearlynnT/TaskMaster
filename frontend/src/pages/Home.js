@@ -1,23 +1,28 @@
-import { Link, useNavigate } from "react-router-dom";
-import useLogout from "../hooks/useLogout";
-//import Tasks from "../components/Tasks"
+import { Link } from "react-router-dom";
+import Header from "../components/Header";
+import Project from "../components/Project";
+import '../style/home.css'
+import data from '../data/data.js'
 
 function Home() {
-    const navigate = useNavigate();
-    const logout = useLogout();
-
-    const signOut = async () => {
-        await logout();
-        navigate('/login');
-    }
+    // to be replaced with axios 
+    const dataSet = data.map(item => {
+        return (
+            <Project
+                key={item.id}
+                {...item}
+            />
+        )
+    })
 
     return (
-        <>
-            <h1>Landing Page</h1>
-            <div className="logoutBtn">
-                <button onClick={signOut}>Logout</button>
+        <div className = "home">
+            <Header />
+            <Link to="/projectCreation">+ Create New Project</Link>
+            <div className = "home--data">
+                {dataSet}
             </div>
-        </>
+        </div>
     )
 }
 

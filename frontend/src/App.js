@@ -5,19 +5,23 @@ import Home from './pages/Home';
 import Layout from './components/Layout';
 import PersistLogin from './components/PersistLogin';
 import RequireAuth from './components/RequireAuth';
+import ProjectCreation from './pages/ProjectCreation';
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path="/">
         {/* public routes */}
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        <Route element = {<Layout />}>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+        </Route>
 
         {/* protected routes */}
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Home />} />
+            <Route path="projectCreation" element={<ProjectCreation />} />
           </Route>
         </Route>
       </Route>
