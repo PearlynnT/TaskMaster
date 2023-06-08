@@ -1,3 +1,5 @@
+// to be edited
+
 const User = require('../model/User');
 
 const getAllUsers = async (req, res) => {

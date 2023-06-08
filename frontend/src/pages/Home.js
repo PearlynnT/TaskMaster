@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
-//import Tasks from "../components/Tasks"
+import Projects from "../components/Projects"
 
 function Home() {
     const navigate = useNavigate();
@@ -13,7 +13,7 @@ function Home() {
 
     return (
         <>
-            <h1>Landing Page</h1>
+            <Projects />
             <div className="logoutBtn">
                 <button onClick={signOut}>Logout</button>
             </div>

@@ -1,11 +1,9 @@
-// to be edited
-
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
 
-function Tasks() {
-    const [tasks, setTasks] = useState();
+function Projects() {
+    const [projects, setProjects] = useState();
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
@@ -14,18 +12,18 @@ function Tasks() {
         let isMounted = true;
         const controller = new AbortController();
 
-        const getTasks = async () => {
+        const getProjects = async () => {
             try {
-                const response = await axiosPrivate.get('/tasks', {
+                const response = await axiosPrivate.get('/projects', {
                     signal: controller.signal
                 });
-                isMounted && setTasks(response.data);
+                isMounted && setProjects(response.data);
             } catch (err) {
                 navigate('/login', { state: { from: location }, replace: true });
             }
         }
 
-        getTasks();
+        getProjects();
 
         return () => {
             isMounted = false;
@@ -35,15 +33,21 @@ function Tasks() {
 
     return (
         <div>
-            {tasks?.length
+            <h1>Projects</h1>
+            {projects?.length
                 ? (
                     <div>
-                        {tasks.map((task, i) => <div key={i}>{/* todo */}</div>)}
+                        {projects.map((project, i) => {
+                            <div key={i} className="project">
+                                <h3>{project?.name}</h3>
+                                <p>{project?.description}</p>
+                            </div>}
+                        )}
                     </div>
-                ) : <h2>You have no tasks</h2>
+                ) : <h2>You have no projects.</h2>
             }
         </div>
     )
 }
 
-export default Tasks
+export default Projects
