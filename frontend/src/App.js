@@ -14,12 +14,12 @@ function App() {
         {/* public routes */}
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="create" element={<ProjectCreation />} /> {/* change to protected routes */}
 
         {/* protected routes */}
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Home />} />
-            <Route path="/create" element={<ProjectCreation />} />
           </Route>
         </Route>
       </Route>
