@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Layout from './components/Layout';
 import PersistLogin from './components/PersistLogin';
 import RequireAuth from './components/RequireAuth';
+import ProjectCreation from './pages/ProjectCreation';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Home />} />
+            <Route path="/create" element={<ProjectCreation />} />
           </Route>
         </Route>
       </Route>
