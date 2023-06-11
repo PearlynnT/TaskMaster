@@ -36,6 +36,7 @@ app.use('/create', require('./routes/project'));
 
 app.use(verifyJWT);
 app.use('/users', require('./routes/api/users'));
+app.use('/projects', require('./routes/api/projects'))
 
 app.all('*', (req, res) => {
     res.status(404);

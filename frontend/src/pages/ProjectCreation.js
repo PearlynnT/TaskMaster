@@ -33,7 +33,6 @@ function ProjectCreation() {
                     headers: { 'Content-Type': 'application/json' }
                 }
             );
-            console.log(name, description);
             setSuccess(true);
             setName('');
             setDescription('');

@@ -2,7 +2,6 @@ const Project = require('../model/Project');
 
 const addProject = async (req, res) => {
     const { name, description} = req.body;
-
     try {
         const result = await Project.create({
             "name": name,
@@ -14,6 +13,16 @@ const addProject = async (req, res) => {
     }
 }
 
-module.exports = { addProject };
+const getAllProjects = async (req, res) => {
+    const projects = await Project.find({});
+    if (!projects) {
+        return res.status(204).json({ 'message': 'No projects found' });
+    }
+    res.json(projects);
+}
+
+module.exports = { addProject, getAllProjects };
+
+
 
 
