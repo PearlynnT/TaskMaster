@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
-import Project from "./Project";
+import Project from "./Projects";
 import '../style/task.css';
 
 function Tasks() {
@@ -17,7 +17,7 @@ function Tasks() {
     const getTasks = async () => {
       try {
         const response = await axiosPrivate.get(
-          "http://localhost:3500/projects",
+          "/projects",
           {
             signal: controller.signal,
           }
@@ -43,7 +43,13 @@ function Tasks() {
       {tasks.length ? (
         <div className = "task--container">
           {tasks.map((task, i) => (
-            <div key={i}>{<Project name = {task.name} description = {task.description}/>}</div>
+            <div key={i}>
+              {<Project 
+                name={task.name} 
+                description={task.description}
+                members={task.members}
+                />}
+            </div>
           ))}
         </div>
       ) : (

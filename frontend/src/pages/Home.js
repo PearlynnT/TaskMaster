@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Tasks from '../components/Tasks';
-
+//import Projects from '../components/Projects';
 
 function Home() {
   return (
