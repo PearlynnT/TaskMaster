@@ -45,9 +45,10 @@ function Tasks() {
           {tasks.map((task, i) => (
             <div key={i}>
               {<Project 
-                name={task.name} 
-                description={task.description}
-                members={task.members}
+                // name={task.name} 
+                // description={task.description}
+                // members={task.members}
+                {...task}
                 />}
             </div>
           ))}

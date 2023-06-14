@@ -78,18 +78,21 @@ const updateProject = async (req, res) => {
 
 const deleteProject = async (req, res) => {
     try {
-        if (!req?.body?.id) {
-            return res.status(400).json({ 'message': 'Project ID required.' });
-        }
-        const project = await Project.findOne({ _id: req.body.id }).exec();
-        if (!project) {
-            return res.status(204).json({ "message": `No project matches ID ${req.body.id}.` });
-        }
-        if (project.owner != req.user.id) {
-            return res.status(403).json({ 'message': "You can't delete project of another user" });
-        }
-        const result = await project.deleteOne(); 
-        res.json(result);
+        //if (!req?.body?.id) {
+        //    return res.status(400).json({ 'message': 'Project ID required.' });
+        //}
+        //const project = await Project.findOne({ _id: req.body.id }).exec();
+        //if (!project) {
+        //    return res.status(204).json({ "message": `No project matches ID ${req.body.id}.` });
+        //}
+        //if (project.owner != req.user.id) {
+        //    return res.status(403).json({ 'message': "You can't delete project of another user" });
+        //}
+        //const result = await project.deleteOne(); 
+        //res.json(result);
+        const id = req.params.id;
+        await Project.findByIdAndRemove(id).exec();
+        res.send('deleted');
     } catch (err) {
         console.error(err);
         return res.status(500).json({ 'message': 'Internal Server Error' });
