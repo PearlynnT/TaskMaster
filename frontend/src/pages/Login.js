@@ -8,7 +8,7 @@ import axios from "../api/axios";
 const LOGIN_URL = "/login";
 
 function Login() {
-    const { setAuth, persist, setPersist } = useAuth();
+    const { setAuth, persist, setPersist, setCurrUser } = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -42,6 +42,7 @@ function Login() {
             );
             const accessToken = response?.data?.accessToken;
             setAuth({ user, pwd, accessToken });
+            setCurrUser(user);
             setUser('');
             setPwd('');
             navigate(from, { replace: true });

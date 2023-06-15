@@ -17,7 +17,8 @@ const projectSchema = new Schema(
         },
         members: [{ 
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+            ref: "User",
+            required: true
         }],
         completed: { 
             type: Boolean,

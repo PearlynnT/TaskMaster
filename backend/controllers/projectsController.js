@@ -1,4 +1,5 @@
 const Project = require('../model/Project');
+const mongoose = require('mongoose');
 
 // const addProject = async (req, res) => {
 //     const { name, description} = req.body;
@@ -25,7 +26,7 @@ const Project = require('../model/Project');
 
 const getAllProjects = async (req, res) => {
     try {
-        const projects = await Project.find({ owner: req.user.id });
+        const projects = await Project.find({ owner: req.user.id }); // todo
         if (!projects) {
             return res.status(204).json({ 'message': 'No projects found.' });
         }
@@ -42,7 +43,8 @@ const createNewProject = async (req, res) => {
     }
     try {
         const result = await Project.create({
-            owner: req.body._id, // not sure
+            owner: new mongoose.Types.ObjectId(req.body.own), // req.owner.id 
+            members: req.body.memb.map(x => new mongoose.Types.ObjectId(x)), 
             ...req.body
         });
         res.status(201).json(result);
