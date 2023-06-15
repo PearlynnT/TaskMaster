@@ -164,6 +164,7 @@ function ProjectCreation() {
                             required
                         />
                         <Select 
+                            className="projectCreation--select"
                             options={options}
                             name="members"
                             isMulti

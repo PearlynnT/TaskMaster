@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
-import Project from "./Projects";
+import Project from "./Project";
 import '../style/task.css';
 
 function Tasks() {
