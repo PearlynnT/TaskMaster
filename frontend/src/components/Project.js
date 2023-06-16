@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../style/project.css';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { Link } from 'react-router-dom';
 
 function Project(props) {
     const axiosPrivate = useAxiosPrivate();
@@ -21,6 +22,7 @@ function Project(props) {
             <p>{props.description}</p>
             <p>{props.members}</p>
             <button onClick={() => handleDelete(props._id)}>Delete</button>
+            <Link to="/taskView">View Tasks</Link>
         </div>
     )
 }

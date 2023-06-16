@@ -6,6 +6,7 @@ import Layout from './components/Layout';
 import PersistLogin from './components/PersistLogin';
 import RequireAuth from './components/RequireAuth';
 import ProjectCreation from './pages/ProjectCreation';
+import TaskView from './pages/TaskView';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Home />} />
             <Route path="projectCreation" element={<ProjectCreation />} />
+            <Route path="taskView" element={<TaskView />} />
           </Route>
         </Route>
       </Route>
