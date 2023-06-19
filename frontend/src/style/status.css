@@ -1,0 +1,20 @@
+.completed, .onGoing, .stuck {
+    padding: 10px;
+    width: 100px;
+    text-align: center;
+    border-radius: 7px;
+    color: white;
+}
+
+.completed {
+    background-color: #31DA42;
+}
+
+.onGoing {
+    background-color: #ECE65C;
+}
+
+.stuck {
+    background-color: #EC5E5E;
+}
+

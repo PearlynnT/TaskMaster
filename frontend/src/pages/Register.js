@@ -86,7 +86,7 @@ function Register() {
             ) : (
                 <section className = "register--notsuccessful">
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <h1>Register</h1>
+                    <h1 className="blueBold">Register</h1>
                     <form onSubmit={handleSubmit}>
                         <input
                             type="text"
@@ -160,9 +160,7 @@ function Register() {
                         <button disabled={!validName || !validPwd || !validMatch ? true : false}>Register</button>
                     </form>
                     <p>
-                        <span className="register--link">
-                            <Link to="/">Already have an account? Click here to login.</Link>
-                        </span>
+                        <Link to="/"><span className="register--link">Already have an account? Click here to login.</span></Link> 
                     </p>
                 </section>
             )}

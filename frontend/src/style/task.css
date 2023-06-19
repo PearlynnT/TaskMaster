@@ -1,4 +1,87 @@
-.task--container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+* {
+    box-sizing: border-box;
+    font-size: 17px;
 }
+
+.task {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid #D7D5D5;
+    font-size: 20px;
+}
+
+.task--divider {
+    width: 1px;
+    background-color: #D7D5D5;
+    min-height: 60px;
+}
+
+.task--name {
+    width: 15%;
+}
+
+.task--description {
+    width: 35%;
+}
+
+.task--status {
+    width: 10%;
+}
+
+.task--date {
+    width: 10%;
+}
+
+.task--people {
+    width: 20%;
+}
+
+.task--actions {
+    width: 10%;
+}
+
+@media (max-width: 1200px) {
+    .task--name {
+        width: 25%;
+    }
+
+    .task--description {
+        width: 50%;
+    }
+
+    .task--status,
+    .task--date,
+    .task--people,
+    .task--actions {
+        display: none;
+    }
+}
+
+.task--name,
+.task--description,
+.task--status,
+.task--date,
+.task--people,
+.task--actions {
+    margin-left: 15px;
+}
+
+.task--actions {
+    display: flex;
+    justify-content: space-evenly
+}
+
+.task--delete,
+.task--edit {
+    width: 25px;
+}
+
+.task--button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+  
+  

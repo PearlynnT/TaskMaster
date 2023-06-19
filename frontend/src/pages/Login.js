@@ -71,7 +71,7 @@ function Login() {
     return (
         <section className = "loginPage">
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-            <h1>Login</h1>
+            <h1 className='blueBold'>Login</h1>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
@@ -103,9 +103,7 @@ function Login() {
                 </div>
             </form>
             <p>
-                <span className="login--link">
-                    <Link to="/register">Don't have an account? Click here to register for one.</Link>
-                </span>
+                <Link to="/register"><span className="login--link">Don't have an account? Click here to register for one.</span></Link>
             </p>
         </section>
     )

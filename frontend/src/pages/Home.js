@@ -1,16 +1,22 @@
-import { Link } from 'react-router-dom';
 import Header from '../components/Header';
+import Projects from '../components/Projects';
 import Tasks from '../components/Tasks';
-//import Projects from '../components/Projects';
+import React, { useState } from 'react';
+import '../style/toggle.css';
 
 function Home() {
+  const [isToggled, setIsToggled] = useState(true);
+  const handleToggle = () => {
+    setIsToggled(!isToggled);
+  };
   return (
-    <div className="home">
+    <div>
       <Header />
-      <Link to="/projectCreation">+ Create New Project</Link>
-      <div className="home--data">
-        <Tasks/>
+      <div className='toggle--container'>
+        <button className={`toggle--projects ${isToggled ? 'toggled' : ''}`} onClick={handleToggle}>Projects</button>
+        <button className={`toggle--tasks ${!isToggled ? 'toggled' : ''}`} onClick={handleToggle}>Tasks</button>
       </div>
+      {isToggled ? <Projects/> : <Tasks />}
     </div>
   );
 }

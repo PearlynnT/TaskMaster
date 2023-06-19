@@ -1,7 +1,47 @@
 .project {
-    border: 1px solid white;
+    border: 1px solid #D7D5D5;
     margin: 10px;
-    height: 200px;
-    text-align: center;
+    text-align: left;
     border-radius: 30px;
+    min-height: 200px;
+}
+
+.divider {
+    background-color: #D7D5D5;
+    height: 1px;
+    margin: 5px;
+}
+
+.project--header {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.project--delete {
+    all: unset;
+    width: 20px;
+}
+
+.project--name {
+    color: #7674F1;
+    font-size: 25px;
+}
+
+.project--member {
+    font-size: 20px;
+}
+
+.project--description {
+    margin-left: 25px;
+    font-size: 20px
+}
+
+.project--button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
 }

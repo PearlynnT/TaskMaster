@@ -142,7 +142,7 @@ function ProjectCreation() {
             ) : (
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <h1>Create Project</h1>
+                    <h1 className='blueHeader'>Create Project</h1>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="name">Project Name:</label>
                         <input 

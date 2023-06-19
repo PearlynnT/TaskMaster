@@ -26,7 +26,7 @@ const mongoose = require('mongoose');
 
 const getAllProjects = async (req, res) => {
     try {
-        const projects = await Project.find({ owner: req.user.id }); // todo
+        const projects = await Project.find({}); // todo
         if (!projects) {
             return res.status(204).json({ 'message': 'No projects found.' });
         }
