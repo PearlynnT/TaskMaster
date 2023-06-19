@@ -46,7 +46,7 @@ function Projects() {
       }
     };
 
-    getOwner.then(() => getProjects());
+    getOwner().then(() => getProjects());
 
     return () => {
       isMounted = false;
