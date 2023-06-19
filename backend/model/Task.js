@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const taskSchema = new Schema(
     {
+        project: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Project"
+        },
         name: {
             type: String,
             required: true
@@ -13,6 +17,11 @@ const taskSchema = new Schema(
         },
         priority: {
             type: String,
+            required: true
+        },
+        assignTo: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
             required: true
         },
         date: { // todo

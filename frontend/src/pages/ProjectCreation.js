@@ -61,7 +61,7 @@ function ProjectCreation() {
             isMounted = false;
             controller.abort();
         };
-    }, [axiosPrivate])
+    }, [])
 
     useEffect(() => {
         let isMounted = true;
@@ -91,7 +91,7 @@ function ProjectCreation() {
             isMounted = false;
             controller.abort();
         };
-    }, [axiosPrivate])
+    }, [])
 
     const handleSubmit = async event => {
         event.preventDefault();

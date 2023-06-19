@@ -1,19 +1,34 @@
 import React, { useState, useEffect } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { useNavigate, useLocation } from "react-router-dom";
+import useAuth from '../hooks/useAuth';
 import Project from "./Project";
 import '../style/projects.css';
 import NewProject from "./NewProject";
 
 function Projects() {
   const [projects, setProjects] = useState([]);
+  const [owner, setOwner] = useState('');
   const axiosPrivate = useAxiosPrivate();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { currUser } = useAuth();
 
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
+
+    const getOwner = async () => {
+        try {
+            const { data } = await axiosPrivate.get(
+                "/users",
+                {
+                  signal: controller.signal,
+                }
+            );
+            const currentUser = data.filter((item) => (item.username === currUser));
+            setOwner(currentUser[0]._id);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     const getProjects = async () => {
       try {
@@ -31,13 +46,13 @@ function Projects() {
       }
     };
 
-    getProjects();
+    getOwner.then(() => getProjects());
 
     return () => {
       isMounted = false;
       controller.abort();
     };
-  }, [axiosPrivate, navigate, location]);
+  }, []);
 
   return (
     <div>
