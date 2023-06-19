@@ -60,7 +60,6 @@ function Projects() {
         if (membProject.length !== 0) {
           arr.push(membProject);
         }
-        console.log(arr[0])
         if (isMounted) {
           setProjects(arr[0]);
         }

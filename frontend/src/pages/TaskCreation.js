@@ -6,6 +6,8 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 //import useAuth from '../hooks/useAuth';
 import { Link, useParams } from "react-router-dom";
 import Select from "react-select";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const ADD_TASK_URL = '/add';
 
@@ -20,7 +22,7 @@ function TaskCreation() {
     const [proj, setProj] = useState(id);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [priority, setPriority] = useState(''); 
+    const [priorityLvl, setPriorityLvl] = useState(''); 
     const [assign, setAssign] = useState(null);
     const [date, setDate] = useState(null);
     const [completed, setCompleted] = useState(false);
@@ -56,7 +58,6 @@ function TaskCreation() {
                     let { data } = await axiosPrivate.get(`/users/${userData[i]}`);
                     arr.push({ value: data._id, label: data.username });
                 }
-                console.log(arr)
                 setUserOptions(arr); 
             } catch (err) {
                 console.log(err);
@@ -94,9 +95,11 @@ function TaskCreation() {
     const handleSubmit = async event => {
         event.preventDefault();
 
+        let priority = priorityLvl.value;
+        let assigned = assign.value;
         try {
             const response = await axios.post(ADD_TASK_URL,
-                JSON.stringify({ proj, name, description, priority, assign, completed }),
+                JSON.stringify({ proj, name, description, priority, assigned, date, completed }),
                 {
                     headers: { 'Content-Type': 'application/json' }
                 }
@@ -105,6 +108,7 @@ function TaskCreation() {
             setProj(null);
             setName('');
             setDescription('');
+            setPriorityLvl('');
             setAssign(null);
             setDate(null);
             setCompleted(false);
@@ -156,7 +160,7 @@ function TaskCreation() {
                         <Select 
                             options={priorityOptions}
                             name="priority"
-                            onChange={setPriority}
+                            onChange={setPriorityLvl}
                             autoFocus={true}
                         />
                         <Select 
@@ -164,6 +168,16 @@ function TaskCreation() {
                             name="assignTo"
                             onChange={setAssign}
                             autoFocus={true}
+                        />
+                        <label htmlFor="date">Completed By:</label>
+                        <DatePicker 
+                            showIcon
+                            selected={date}
+                            onChange={setDate}
+                            dateFormat='dd/MM/yyyy'
+                            minDate={new Date()}
+                            // showYearDropdown
+                            // scrollableMonthYearDropdown
                         />
                         <button type="submit">Add Task</button>
                     </form>

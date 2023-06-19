@@ -15,7 +15,7 @@ function TasksByProject() {
         let isMounted = true;
         const controller = new AbortController();
 
-        const getTasksByProject = async () => {
+        const getTasksByProject = async () => { // doesnt work
             try {
                 const { data } = await axiosPrivate.get(
                     "/tasks",

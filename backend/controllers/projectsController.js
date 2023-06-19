@@ -1,32 +1,9 @@
 const Project = require('../model/Project');
 const mongoose = require('mongoose');
 
-// const addProject = async (req, res) => {
-//     const { name, description} = req.body;
-//     try {
-//         const result = await Project.create({
-//             "name": name,
-//             "description": description
-//         });
-//         res.status(201).json({ 'success': `New project ${name} created!` });
-//     } catch (err) {
-//         res.status(500).json({ 'message': err.message });
-//     }
-// }
-
-// const getAllProjects = async (req, res) => {
-//     const projects = await Project.find({});
-//     if (!projects) {
-//         return res.status(204).json({ 'message': 'No projects found' });
-//     }
-//     res.json(projects);
-// }
-
-// module.exports = { addProject, getAllProjects };
-
 const getAllProjects = async (req, res) => {
     try {
-        const projects = await Project.find({}); // todo
+        const projects = await Project.find({}); 
         if (!projects) {
             return res.status(204).json({ 'message': 'No projects found.' });
         }
@@ -80,18 +57,18 @@ const updateProject = async (req, res) => {
 
 const deleteProject = async (req, res) => {
     try {
-        //if (!req?.body?.id) {
+        // if (!req?.body?.id) {
         //    return res.status(400).json({ 'message': 'Project ID required.' });
-        //}
-        //const project = await Project.findOne({ _id: req.body.id }).exec();
-        //if (!project) {
+        // }
+        // const project = await Project.findOne({ _id: req.body.id }).exec();
+        // if (!project) {
         //    return res.status(204).json({ "message": `No project matches ID ${req.body.id}.` });
-        //}
-        //if (project.owner != req.user.id) {
+        // }
+        // if (project.owner != req.user.id) {
         //    return res.status(403).json({ 'message': "You can't delete project of another user" });
-        //}
-        //const result = await project.deleteOne(); 
-        //res.json(result);
+        // }
+        // const result = await project.deleteOne(); 
+        // res.json(result);
         const id = req.params.id;
         await Project.findByIdAndRemove(id).exec();
         res.send('deleted');

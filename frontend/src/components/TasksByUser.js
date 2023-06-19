@@ -7,7 +7,8 @@ import Task from "./Task";
 
 function TasksByUser() {
     const [tasks, setTasks] = useState([]);
-    const [user, setUser] = useState('');
+    //const [user, setUser] = useState('');
+    let user = '';
     const axiosPrivate = useAxiosPrivate();
     const { currUser } = useAuth();
 
@@ -25,14 +26,16 @@ function TasksByUser() {
                 );
                 const currentUser = data.filter((item) => (item.username === currUser));
                 if (isMounted) {
-                    setUser(currentUser[0]._id);
+                    //setUser(currentUser[0]._id);
+                    user = currentUser[0]._id
+                    console.log(user)
                 }
             } catch (err) {
                 console.log(err);
             }
         }
 
-        const getTasksByUser = async () => {
+        const getTasksByUser = async () => { // doesnt work
             try {
                 const { data } = await axiosPrivate.get(
                     "/tasks",
@@ -40,7 +43,8 @@ function TasksByUser() {
                       signal: controller.signal,
                     }
                 );
-                const userTasks = data.filter((item) => (item.assignTo === user)); // need to check assignTo type
+                const userTasks = data.filter((item) => (item.assignTo === user)); 
+                console.log(data)
                 if (isMounted) {
                     setTasks(userTasks);
                 }

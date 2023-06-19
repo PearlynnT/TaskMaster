@@ -1,23 +1,36 @@
 const Task = require('../model/Task');
 const mongoose = require('mongoose');
 
-const getAllTasksByProj = async (req, res) => {
-    try {
-        const tasks = await Task.find({ project: req.body.project }); // todo: get all tasks based on projectid
-        if (!tasks) {
-            return res.status(204).json({ 'message': 'No tasks found.' });
-        }
-        res.json(tasks);
-    } catch (err) {
-        console.error(err);
-        return res.status(500).json({ 'message': 'Internal Server Error' });
-    }
-}
+// const getAllTasksByProj = async (req, res) => {
+//     try {
+//         const tasks = await Task.find({ project: req.body.project }); // todo: get all tasks based on projectid
+//         if (!tasks) {
+//             return res.status(204).json({ 'message': 'No tasks found.' });
+//         }
+//         res.json(tasks);
+//     } catch (err) {
+//         console.error(err);
+//         return res.status(500).json({ 'message': 'Internal Server Error' });
+//     }
+// }
 
-// todo: get all tasks based on userid
-const getAllTasksByUser = async (req, res) => {
+// // todo: get all tasks based on userid
+// const getAllTasksByUser = async (req, res) => {
+//     try {
+//         const tasks = await Task.find({ assignTo: req.body.user });
+//         if (!tasks) {
+//             return res.status(204).json({ 'message': 'No tasks found.' });
+//         }
+//         res.json(tasks);
+//     } catch (err) {
+//         console.error(err);
+//         return res.status(500).json({ 'message': 'Internal Server Error' });
+//     }
+// }
+
+const getAllTasks = async (req, res) => {
     try {
-        const tasks = await Task.find({ assignTo: req.body.user });
+        const tasks = await Task.find({}); 
         if (!tasks) {
             return res.status(204).json({ 'message': 'No tasks found.' });
         }
@@ -29,13 +42,14 @@ const getAllTasksByUser = async (req, res) => {
 }
 
 const createNewTask = async (req, res) => {
-    if (!req?.body?.name || !req?.body?.description) { // to be added
+    if (!req?.body?.name || !req?.body?.description || !req?.body?.priority || !req?.body?.assigned || !req?.body?.date) { 
         return res.status(400).json({ 'message': 'All fields are required' });
     }
     try {
+        console.log(req.body)
         const result = await Task.create({
             project: new mongoose.Types.ObjectId(req.body.proj),
-            assignTo: new mongoose.Types.ObjectId(req.body.assign),
+            assignTo: new mongoose.Types.ObjectId(req.body.assigned),
             ...req.body
         });
         res.status(201).json(result);
@@ -95,8 +109,9 @@ const getTask = async (req, res) => {
 }
 
 module.exports = {
-    getAllTasksByProj,
-    getAllTasksByUser,
+    // getAllTasksByProj,
+    // getAllTasksByUser,
+    getAllTasks,
     createNewTask,
     updateTask,
     deleteTask,

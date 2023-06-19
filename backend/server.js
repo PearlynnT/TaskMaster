@@ -33,10 +33,12 @@ app.use('/login', require('./routes/login'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 app.use('/create', require('./routes/project'));
+app.use('/add', require('./routes/task'));
 
 app.use(verifyJWT);
 app.use('/users', require('./routes/api/users'));
 app.use('/projects', require('./routes/api/projects'))
+app.use('/tasks', require('./routes/api/tasks'))
 
 app.all('*', (req, res) => {
     res.status(404);
