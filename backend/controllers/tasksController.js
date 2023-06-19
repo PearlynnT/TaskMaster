@@ -34,6 +34,8 @@ const createNewTask = async (req, res) => {
     }
     try {
         const result = await Task.create({
+            project: new mongoose.Types.ObjectId(req.body.proj),
+            assignTo: new mongoose.Types.ObjectId(req.body.assign),
             ...req.body
         });
         res.status(201).json(result);

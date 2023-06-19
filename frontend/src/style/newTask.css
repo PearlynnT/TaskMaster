@@ -1,0 +1,8 @@
+.newTask {
+    color: black;
+    border: 1px solid #D7D5D5;
+    width: 250px;
+    padding: 10px;
+    border-radius: 30px;
+    margin: 10px;
+}

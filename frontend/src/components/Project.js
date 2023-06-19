@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../style/project.css';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { Link } from "react-router-dom";
 import deleteIcon from '../icon/delete.png'
 
 function Project(props) {
@@ -19,7 +20,9 @@ function Project(props) {
     return (
         <div className="project">
             <div className="project--header">
-                <h3 className='project--name'>{props.name}</h3>
+                <Link to={`/tasks/${props._id}`}>
+                    <h3 className='project--name'>{props.name}</h3>
+                </Link>
                 <h4 className='project--member'>{props.members.length < 2 
                                 ? props.members.length + ' member' 
                                 : props.members.length + ' members'}</h4>

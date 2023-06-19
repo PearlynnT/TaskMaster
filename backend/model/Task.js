@@ -24,9 +24,13 @@ const taskSchema = new Schema(
             ref: "User",
             required: true
         },
-        date: { // todo
+        date: { 
             type: Date,
             required: true
+        },
+        completed: { 
+            type: Boolean,
+            default: false
         }
     },
     {

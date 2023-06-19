@@ -1,32 +1,41 @@
+// todo: date
+
 import { useRef, useState, useEffect } from "react";
 import axios from '../api/axios';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import useAuth from '../hooks/useAuth';
-import { Link } from "react-router-dom";
+//import useAuth from '../hooks/useAuth';
+import { Link, useParams } from "react-router-dom";
 import Select from "react-select";
-import '../style/projectCreation.css';
 
-const CREATE_PROJECT_URL = '/create';
+const ADD_TASK_URL = '/add';
 
-function ProjectCreation() {
+function TaskCreation() {
     const axiosPrivate = useAxiosPrivate();
-    const { currUser } = useAuth();
+    //const { currUser } = useAuth();
+    const { id } = useParams();
 
     const nameRef = useRef();
     const errRef = useRef();
 
-    const [own, setOwn] = useState(null);
+    const [proj, setProj] = useState(id);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    //const [memb, setMemb] = useState([]);
-    const memb = [];
+    const [priority, setPriority] = useState(''); 
+    const [assign, setAssign] = useState(null);
+    const [date, setDate] = useState(null);
     const [completed, setCompleted] = useState(false);
 
-    const [options, setOptions] = useState([]);
-    const [selectedOptions, setSelectedOptions] = useState(null);
+    const [userOptions, setUserOptions] = useState([]);
+    //const [userData, setUserData] = useState([]);
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
+
+    const priorityOptions = [
+        { value: "high", label: "High" },
+        { value: "medium", label: "Medium" },
+        { value: "low", label: "Low" }
+    ];
 
     useEffect(() => {
         nameRef.current.focus();
@@ -40,52 +49,39 @@ function ProjectCreation() {
         let isMounted = true;
         const controller = new AbortController();
 
-        const getOwner = async () => {
+        const getOptions = async userData => {
             try {
-                const { data } = await axiosPrivate.get(
-                    "/users",
-                    {
-                      signal: controller.signal,
-                    }
-                );
-                const currentUser = data.filter((item) => (item.username === currUser));
-                if (isMounted) {
-                    setOwn(currentUser[0]._id);
+                let arr = [];
+                for (let i = 0; i < userData.length; i++) {
+                    let { data } = await axiosPrivate.get(`/users/${userData[i]}`);
+                    arr.push({ value: data._id, label: data.username });
                 }
+                console.log(arr)
+                setUserOptions(arr); 
             } catch (err) {
                 console.log(err);
             }
-        };
-
-        getOwner();
-
-        return () => {
-            isMounted = false;
-            controller.abort();
-        };
-    }, [])
-
-    useEffect(() => {
-        let isMounted = true;
-        const controller = new AbortController();
+        }
 
         const getUsers = async () => {
             try {
                 const { data } = await axiosPrivate.get(
-                    "/users",
+                    "/projects",
                     {
                       signal: controller.signal,
                     }
                 );
-                const option = data.map((item) => ({ // todo: filter out owner
-                    "value" : item._id,
-                    "label" : item.username
-                }))
-                setOptions(option);
+                const project = data.filter((item) => (item._id === id));
+                if (isMounted) {
+                    let arr = project[0].members;
+                    arr.push(project[0].owner);
+                    //setUserData(arr);
+                    getOptions(arr);
+                }
             } catch (err) {
                 console.log(err);
             }
-        };
+        }
 
         getUsers();
 
@@ -98,45 +94,37 @@ function ProjectCreation() {
     const handleSubmit = async event => {
         event.preventDefault();
 
-        //const arr = [];
-        for (let i = 0; i < selectedOptions.length; i++) {
-            let { data } = await axiosPrivate.get(`/users/${selectedOptions[i].value}`);
-            //arr.push(data._id);
-            memb.push(data._id);
-        }
-        //setMemb(arr);
-
         try {
-            const response = await axios.post(CREATE_PROJECT_URL,
-                JSON.stringify({ own, name, description, memb, completed }),
+            const response = await axios.post(ADD_TASK_URL,
+                JSON.stringify({ proj, name, description, priority, assign, completed }),
                 {
                     headers: { 'Content-Type': 'application/json' }
                 }
             );
             setSuccess(true);
-            setOwn(null);
+            setProj(null);
             setName('');
             setDescription('');
-            //setMemb([]);
+            setAssign(null);
+            setDate(null);
             setCompleted(false);
-            setSelectedOptions(null);
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
             } else {
-                setErrMsg('Failed to create new project');
+                setErrMsg('Failed to add new task');
             }
             errRef.current.focus();
         }
     }
 
     return (
-        <div className="projectCreation--container">
+        <div>
             { success ? (
-                <section className = "create--successful">
-                    <h1>Successfully created a new project!</h1>
+                <section>
+                    <h1>Successfully added a new task!</h1>
                     <p>
-                        <span className="create--link">
+                        <span>
                             <Link to="/">Home</Link>
                         </span>
                     </p>
@@ -144,9 +132,9 @@ function ProjectCreation() {
             ) : (
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <h1 className='blueHeader'>Create Project</h1>
+                    <h1>Add Task</h1>
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor="name">Project Name:</label>
+                        <label htmlFor="name">Task Name:</label>
                         <input 
                             type="text"
                             id="name"
@@ -156,7 +144,7 @@ function ProjectCreation() {
                             value={name}
                             required
                         />
-                        <label htmlFor="description">Project Description:</label>
+                        <label htmlFor="description">Task Description:</label>
                         <input 
                             type="text"
                             id="description"
@@ -166,21 +154,23 @@ function ProjectCreation() {
                             required
                         />
                         <Select 
-                            className="projectCreation--select"
-                            options={options}
-                            name="members"
-                            isMulti
-                            isSearchable
-                            onChange={setSelectedOptions}
+                            options={priorityOptions}
+                            name="priority"
+                            onChange={setPriority}
                             autoFocus={true}
                         />
-                        <button type="submit">Create Project</button>
+                        <Select 
+                            options={userOptions}
+                            name="assignTo"
+                            onChange={setAssign}
+                            autoFocus={true}
+                        />
+                        <button type="submit">Add Task</button>
                     </form>
                 </section>
             )}
-            <div>{!success ? <Link to="/">Home Page</Link> : <></>}</div>
         </div>
     )
 }
 
-export default ProjectCreation
+export default TaskCreation
