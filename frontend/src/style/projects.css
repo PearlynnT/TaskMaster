@@ -7,3 +7,10 @@
 .projects--nav {
     margin: 0px 20px 0px 20px;
 }
+
+.projects--new {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 7px;
+}

@@ -78,11 +78,12 @@ function Projects() {
 
   return (
     <div>
+      <div className='projects--new'>
+        <NewProject />
+      </div>
       <div>
         {projects.length ? (
           <div className="projects--container">
-            <NewProject />
-            <br />
             {projects.map((project, i) => (
               <div key={i}>
                 {<Project 
@@ -93,8 +94,6 @@ function Projects() {
           </div>
         ) : (
           <div>
-            <NewProject />
-            <br />
             <p>You have no projects</p>
           </div>
         )}
