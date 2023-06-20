@@ -6,11 +6,11 @@ function NewTask(props) {
     let id = props.id;
 
     return (
-        <Link to={`/taskCreation/${id}`}>
-            <div className='newTask'>
-                + Add New Task
-            </div>
-        </Link>
+        <div className='newTask'>
+            <Link to={`/taskCreation/${id}`}>
+                <p style={{color:'black'}}>+ Add New Task</p>
+            </Link>
+        </div>
     )
 }
 

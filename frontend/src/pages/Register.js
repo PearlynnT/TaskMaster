@@ -157,10 +157,11 @@ function Register() {
                             Passwords do not match.
                         </p>
 
-                        <button disabled={!validName || !validPwd || !validMatch ? true : false}>Register</button>
+                        <button className='register--button' disabled={!validName || !validPwd || !validMatch ? true : false}>Register</button>
                     </form>
                     <p>
-                        <Link to="/"><span className="register--link">Already have an account? Click here to login.</span></Link> 
+                        <span>Already have an account? </span>
+                        <Link to="/"><span className="register--link">Click here to login</span></Link> 
                     </p>
                 </section>
             )}

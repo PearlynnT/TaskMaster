@@ -59,6 +59,7 @@ function TasksByProject() {
                     <p>This project has no task</p>
                 </div>
             )}
+            <div className='divider'></div>
         </>
     )
 }

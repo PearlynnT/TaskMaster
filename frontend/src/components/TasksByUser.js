@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import useAuth from '../hooks/useAuth';
 import Task from "./Task";
+import '../style/tasksByUser.css'
 
 function TasksByUser() {
     const [tasks, setTasks] = useState([]);
@@ -61,22 +62,27 @@ function TasksByUser() {
         };
     }, [])
 
+    const table = <>
+        {tasks.length ? (
+            <div>
+                {tasks.map((task, i) => (
+                    <div key={i}>
+                        <Task {...task} />
+                    </div>
+                ))}
+            </div>
+        ) : (
+            <div>
+                <p>You have no tasks</p>
+            </div>
+        )}
+        <div className='divider'></div>
+    </>
+
     return (
-        <>
-            {tasks.length ? (
-                <div>
-                    {tasks.map((task, i) => (
-                        <div key={i}>
-                            <Task {...task} />
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <div>
-                    <p>You have no tasks</p>
-                </div>
-            )}
-        </>
+        <div className='tasks--table'>
+            {table}
+        </div>
     )
 }
 

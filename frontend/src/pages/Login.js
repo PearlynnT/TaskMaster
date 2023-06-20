@@ -91,7 +91,7 @@ function Login() {
                     value={pwd}
                     required
                 />
-                <button>Sign In</button>
+                <button className='signin--button'>Sign In</button>
                 <div className="persistCheck">
                     <input
                         type="checkbox"
@@ -103,7 +103,8 @@ function Login() {
                 </div>
             </form>
             <p>
-                <Link to="/register"><span className="login--link">Don't have an account? Click here to register for one.</span></Link>
+                <span>Don't have an account? </span>
+                <Link to="/register"><span className="login--link">Click here to sign up</span></Link>
             </p>
         </section>
     )
