@@ -170,11 +170,11 @@ function ProjectCreation() {
                             onChange={setSelectedOptions}
                             autoFocus={true}
                         />
-                        <button type="submit">Create Project</button>
+                        <button type="submit" className='createProject'>Create Project</button>
                     </form>
                 </section>
             )}
-            <div>{!success ? <Link to="/">Home Page</Link> : <></>}</div>
+            <div>{!success ? <Link to="/"><span style={{color: '#6988F6', textDecoration: 'underline'}}>Home Page</span></Link> : <></>}</div>
         </div>
     )
 }

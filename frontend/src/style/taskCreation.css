@@ -1,0 +1,13 @@
+.taskCreation--container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 10%;
+}
+
+.addTask {
+    background-color: #6988F6;
+    color: white;
+    border: none;
+}

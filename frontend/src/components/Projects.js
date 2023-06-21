@@ -82,7 +82,7 @@ function Projects() {
   }, [flag]);
 
   return (
-    <div>
+    <div style={{margin:'30px'}}>
       <div className='projects--new'>
         <NewProject />
       </div>

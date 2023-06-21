@@ -1,5 +1,4 @@
 // todo: date
-
 import { useRef, useState, useEffect } from "react";
 import axios from '../api/axios';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
@@ -8,6 +7,7 @@ import { Link, useParams } from "react-router-dom";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import '../style/taskCreation.css'
 
 const ADD_TASK_URL = '/add';
 
@@ -123,20 +123,16 @@ function TaskCreation() {
     }
 
     return (
-        <div>
+        <div className='taskCreation--container'>
             { success ? (
                 <section>
                     <h1>Successfully added a new task!</h1>
-                    <p>
-                        <span>
-                            <Link to="/">Home</Link>
-                        </span>
-                    </p>
+                    <Link to="/"><span style={{color: '#6988F6', textDecoration: 'underline'}}>Home</span></Link>
                 </section>
             ) : (
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <h1>Add Task</h1>
+                    <h1 className='blueHeader'>Add Task</h1>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="name">Task Name:</label>
                         <input 
@@ -162,12 +158,14 @@ function TaskCreation() {
                             name="priority"
                             onChange={setPriorityLvl}
                             autoFocus={true}
+                            placeholder= 'Priority'
                         />
                         <Select 
                             options={userOptions}
                             name="assignTo"
                             onChange={setAssign}
                             autoFocus={true}
+                            placeholder='Assign members'
                         />
                         <label htmlFor="date">Completed By:</label>
                         <DatePicker 
@@ -179,10 +177,11 @@ function TaskCreation() {
                             // showYearDropdown
                             // scrollableMonthYearDropdown
                         />
-                        <button type="submit">Add Task</button>
+                        <button type="submit" className='addTask'>Add Task</button>
                     </form>
                 </section>
             )}
+            <Link to="/"><span style={{color: '#6988F6', textDecoration: 'underline'}}>Home Page</span></Link>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-1. Home page does not re-render after project is deleted 
+1. Home page does not re-render after project is deleted // fixed 
 2. Task component 
     2.1 Delete task not implemented 
     2.2 Edit task not implemented 
@@ -9,6 +9,7 @@
     4.1 Buttons / Links that can be pressed need to be clearer 
     4.2 Need @media for page resizing 
     4.3 Login / Register page looks kinda plain now 
+5. Deleting project does not cause tasks associated to be deleted together 
 
 Extras: 
 1. Project Creation add members filtering function 

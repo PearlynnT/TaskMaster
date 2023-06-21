@@ -5,6 +5,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
 import Task from "./Task";
 import NewTask from "./NewTask";
+import { Link } from 'react-router-dom';
 
 function TasksByProject() {
     const [tasks, setTasks] = useState([]);
@@ -42,6 +43,7 @@ function TasksByProject() {
 
     return (
         <>
+            <Link to="/"><span style={{color: '#6988F6', textDecoration: 'underline'}}>Home</span></Link>
             {tasks.length ? (
                 <div>
                     <NewTask id={id} />
