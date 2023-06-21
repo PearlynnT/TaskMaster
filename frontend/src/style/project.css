@@ -14,9 +14,9 @@
 
 .project--header {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-direction: row;
-    margin-top: 20px;
+    margin: 20px 20px 10px 20px;
     align-items: center;
 }
 
@@ -28,6 +28,7 @@
 .project--name {
     color: #7674F1;
     font-size: 25px;
+    padding: 7px;
 }
 
 .project--member {
@@ -35,7 +36,7 @@
 }
 
 .project--description {
-    margin-left: 25px;
+    margin: 0px 0px 0px 20px; 
     font-size: 20px
 }
 

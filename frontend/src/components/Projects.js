@@ -11,6 +11,11 @@ function Projects() {
   let user = '';
   const axiosPrivate = useAxiosPrivate();
   const { currUser } = useAuth();
+  const [flag, setFlag] = useState(false);
+
+  const toggle = () => {
+    setFlag(!flag);
+  }
 
   useEffect(() => {
     let isMounted = true;
@@ -74,7 +79,7 @@ function Projects() {
       isMounted = false;
       controller.abort();
     };
-  }, []);
+  }, [flag]);
 
   return (
     <div>
@@ -82,12 +87,13 @@ function Projects() {
         <NewProject />
       </div>
       <div>
-        {projects.length ? (
+        {projects?.length ? (
           <div className="projects--container">
             {projects.map((project, i) => (
               <div key={i}>
                 {<Project 
                   {...project}
+                  toggle = {toggle}
                   />}
               </div>
             ))}

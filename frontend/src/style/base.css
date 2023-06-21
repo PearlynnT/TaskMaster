@@ -112,6 +112,7 @@ button {
 .login--link,
 .register--link {
     color: #6988F6;
+    text-decoration: underline;
 }
 
 .signin--button,

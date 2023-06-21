@@ -135,11 +135,7 @@ function ProjectCreation() {
             { success ? (
                 <section className = "create--successful">
                     <h1>Successfully created a new project!</h1>
-                    <p>
-                        <span className="create--link">
-                            <Link to="/">Home</Link>
-                        </span>
-                    </p>
+                    <Link to="/"><span className="create--link">Home</span></Link>
                 </section>
             ) : (
                 <section>

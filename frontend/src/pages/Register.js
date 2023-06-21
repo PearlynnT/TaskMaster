@@ -77,11 +77,7 @@ function Register() {
             { success ? (
                 <section className = "register--successful">
                     <h1>Successfully registered!</h1>
-                    <p>
-                        <span className="register--link">
-                            <Link to="/">Login</Link>
-                        </span>
-                    </p>
+                    <Link to="/"><span className="register--link">Login</span></Link>
                 </section>
             ) : (
                 <section className = "register--notsuccessful">
