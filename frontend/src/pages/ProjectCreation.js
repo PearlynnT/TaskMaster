@@ -169,6 +169,7 @@ function ProjectCreation() {
                             isSearchable
                             onChange={setSelectedOptions}
                             autoFocus={true}
+                            placeholder = 'Add members'
                         />
                         <button type="submit" className='createProject'>Create Project</button>
                     </form>

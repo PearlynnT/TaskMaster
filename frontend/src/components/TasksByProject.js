@@ -1,22 +1,20 @@
-// todo
-
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { useParams } from "react-router-dom";
 import Task from "./Task";
 import NewTask from "./NewTask";
-import { Link } from 'react-router-dom';
+import '../style/tasksByProject.css'
 
-function TasksByProject() {
+
+function TasksByProject(props) {
     const [tasks, setTasks] = useState([]);
     const axiosPrivate = useAxiosPrivate();
-    let { id } = useParams();
+
 
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
 
-        const getTasksByProject = async () => { // doesnt work
+        const getTasksByProject = async () => { 
             try {
                 const { data } = await axiosPrivate.get(
                     "/tasks",
@@ -24,7 +22,7 @@ function TasksByProject() {
                       signal: controller.signal,
                     }
                 );
-                const projectTasks = data.filter((item) => (item.project === id)); // to check
+                const projectTasks = data.filter((item) => (item.project === props._id));
                 if (isMounted) {
                     setTasks(projectTasks);
                 }
@@ -41,28 +39,23 @@ function TasksByProject() {
         };
     }, [])
 
+    const taskView = <div>
+        {tasks.map((task, i) => (
+        <div key={i}>
+          {<Task 
+            {...task}
+            toggle = {props.toggle}
+            />}
+        </div>
+      ))}
+    </div>
+
     return (
-        <>
-            <Link to="/"><span style={{color: '#6988F6', textDecoration: 'underline'}}>Home</span></Link>
-            {tasks.length ? (
-                <div>
-                    <NewTask id={id} />
-                    <br />
-                    {tasks.map((task, i) => (
-                        <div key={i}>
-                            <Task {...task} />
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <div>
-                    <NewTask id={id} />
-                    <br />
-                    <p>This project has no task</p>
-                </div>
-            )}
-            <div className='divider'></div>
-        </>
+        <div className='tbp--container'>
+            <div className='tbp--name'>{props.name}</div>
+            {taskView}
+            <NewTask id = {props._id}/>
+        </div>
     )
 }
 

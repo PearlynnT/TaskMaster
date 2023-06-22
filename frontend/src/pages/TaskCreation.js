@@ -97,6 +97,7 @@ function TaskCreation() {
 
         let priority = priorityLvl.value;
         let assigned = assign.value;
+        console.log(assigned);
         try {
             const response = await axios.post(ADD_TASK_URL,
                 JSON.stringify({ proj, name, description, priority, assigned, date, completed }),

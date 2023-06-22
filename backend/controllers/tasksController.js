@@ -85,7 +85,9 @@ const updateTask = async (req, res) => {
 
 const deleteTask = async (req, res) => {
     try {
-        // todo
+        const id = req.params.id;
+        await Task.findByIdAndRemove(id).exec();
+        res.send('deleted');
     } catch (err) {
         console.error(err);
         return res.status(500).json({ 'message': 'Internal Server Error' });
