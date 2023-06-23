@@ -1,8 +1,13 @@
 .newProject {
-    color: black;
+    color: #6988F6;
     border: 1px solid #D7D5D5;
     width: 195px;
     padding: 10px;
     border-radius: 30px;
     margin: 10px;
+}
+
+.newProject:hover {
+    color: white;
+    background-color: #6988F6;
 }
