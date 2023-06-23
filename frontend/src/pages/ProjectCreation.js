@@ -77,7 +77,8 @@ function ProjectCreation() {
                       signal: controller.signal,
                     }
                 );
-                const option = data.map((item) => ({ // todo: filter out owner
+                const newData = data.filter((item) => (item.username !== currUser));
+                const option = newData.map((item) => ({ 
                     "value" : item._id,
                     "label" : item.username
                 }))
