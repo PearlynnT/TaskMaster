@@ -1,8 +1,9 @@
 const Project = require('../model/Project');
+const mongoose = require('mongoose');
 
 const getAllProjects = async (req, res) => {
     try {
-        const projects = await Project.find({ owner: req.user.id });
+        const projects = await Project.find({}); 
         if (!projects) {
             return res.status(204).json({ 'message': 'No projects found.' });
         }
@@ -19,8 +20,9 @@ const createNewProject = async (req, res) => {
     }
     try {
         const result = await Project.create({
-            ...req.body,
-            owner: req.user.id // not sure
+            owner: new mongoose.Types.ObjectId(req.body.own), // req.owner.id 
+            members: req.body.memb.map(x => new mongoose.Types.ObjectId(x)), 
+            ...req.body
         });
         res.status(201).json(result);
     } catch (err) {
@@ -55,18 +57,9 @@ const updateProject = async (req, res) => {
 
 const deleteProject = async (req, res) => {
     try {
-        if (!req?.body?.id) {
-            return res.status(400).json({ 'message': 'Project ID required.' });
-        }
-        const project = await Project.findOne({ _id: req.body.id }).exec();
-        if (!project) {
-            return res.status(204).json({ "message": `No project matches ID ${req.body.id}.` });
-        }
-        if (project.owner != req.user.id) {
-            return res.status(403).json({ 'message': "You can't delete task of another user" });
-        }
-        const result = await project.deleteOne(); 
-        res.json(result);
+        const id = req.params.id;
+        await Project.findByIdAndRemove(id).exec();
+        res.send('deleted');
     } catch (err) {
         console.error(err);
         return res.status(500).json({ 'message': 'Internal Server Error' });

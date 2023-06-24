@@ -9,25 +9,17 @@
 html {
     font-family: 'Nunito', sans-serif;
     font-size: 22px;
-    color: #fff;
-}
-
-body {
-    min-height: 100vh;
-    background: url('background.jpg')no-repeat;
-    background-position: center;
-    background-size: cover;
+    color: black;
 }
 
 .App {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh; 
-  padding: 1rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; 
+    padding: 1rem 0.5rem;
 }
-
 section {
     width: 100%;
     max-width: 420px;
@@ -36,8 +28,8 @@ section {
     flex-direction: column;
     justify-content: flex-start;
     padding: 1rem;
-    background-color: rgba(0,0,0,0.4);
     border-radius: 5%;
+    border: 1px solid #D7D5D5;
 }
 
 form {
@@ -54,16 +46,13 @@ a, a:visited {
 
 input[type="text"],
 input[type="password"],
-button,
 textarea {
   font-family: 'Nunito', sans-serif;
   font-size: 22px;
   padding: 0.25rem;
-  border-radius: 0.5rem;
 }
 
-label,
-button {
+label {
   margin-top: 1rem;
 }
 
@@ -74,8 +63,7 @@ button {
 .instructions {
     font-size: 0.75rem;
     border-radius: 0.5rem;
-    background: #000;
-    color: #fff;
+    color: black;
     padding: 0.25rem;
     position: relative;
     bottom: -10px;
@@ -116,4 +104,20 @@ button {
     display: inline-block;
 }
 
+.blueBold {
+    color: #6988F6;
+    font-size: 30px
+}
 
+.login--link,
+.register--link {
+    color: #6988F6;
+    text-decoration: underline;
+}
+
+.signin--button,
+.register--button {
+    background-color: #6988F6;
+    color: white;
+    border: none;
+}

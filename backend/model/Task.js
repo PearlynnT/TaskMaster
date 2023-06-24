@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const projectSchema = new Schema(
+const taskSchema = new Schema(
     {
-        owner: {
+        project: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+            ref: "Project"
         },
         name: {
             type: String,
@@ -15,11 +15,19 @@ const projectSchema = new Schema(
             type: String,
             required: true
         },
-        members: [{ 
+        priority: {
+            type: String,
+            required: true
+        },
+        assignTo: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             required: true
-        }],
+        },
+        date: { 
+            type: Date,
+            required: true
+        },
         completed: { 
             type: Boolean,
             default: false
@@ -30,4 +38,4 @@ const projectSchema = new Schema(
     }
 );
 
-module.exports = mongoose.model("Project", projectSchema);
+module.exports = mongoose.model("Task", taskSchema);

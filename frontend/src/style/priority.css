@@ -1,0 +1,23 @@
+.High,
+.Medium,
+.Low{
+    padding: 10px;
+    width: auto;
+    text-align: center;
+    border-radius: 7px;
+    color: white;
+    margin-right: 15px;
+}
+
+.High {
+    background-color: red;
+}
+
+.Medium {
+    background-color: #31DA42;
+}
+
+.Low {
+    background-color: #ECE65C;
+}
+

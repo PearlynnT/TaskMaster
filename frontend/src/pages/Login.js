@@ -3,10 +3,12 @@ import useAuth from '../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from "../api/axios";
 
+
+
 const LOGIN_URL = "/login";
 
 function Login() {
-    const { setAuth, persist, setPersist } = useAuth();
+    const { setAuth, persist, setPersist, setCurrUser } = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -40,6 +42,7 @@ function Login() {
             );
             const accessToken = response?.data?.accessToken;
             setAuth({ user, pwd, accessToken });
+            setCurrUser(user);
             setUser('');
             setPwd('');
             navigate(from, { replace: true });
@@ -49,7 +52,7 @@ function Login() {
             } else if (err.response?.status === 400) {
                 setErrMsg('Missing Username or Password');
             } else if (err.response?.status === 401) {
-                setErrMsg('Unauthorized');
+                setErrMsg('Wrong Password');
             } else {
                 setErrMsg('Login Failed');
             }
@@ -68,7 +71,7 @@ function Login() {
     return (
         <section className = "loginPage">
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-            <h1>Login</h1>
+            <h1 className='blueBold'>Login</h1>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
@@ -88,7 +91,7 @@ function Login() {
                     value={pwd}
                     required
                 />
-                <button>Sign In</button>
+                <button className='signin--button'>Sign In</button>
                 <div className="persistCheck">
                     <input
                         type="checkbox"
@@ -100,9 +103,8 @@ function Login() {
                 </div>
             </form>
             <p>
-                <span className="login--link">
-                    <Link to="/register">Don't have an account? Click here to register for one.</Link>
-                </span>
+                <span>Don't have an account? </span>
+                <Link to="/register"><span className="login--link">Click here to sign up</span></Link>
             </p>
         </section>
     )

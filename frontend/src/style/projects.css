@@ -1,0 +1,28 @@
+.projects--container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0px 15px 0px 15px;
+}
+
+@media (max-width: 1200px) {
+    .projects--container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 800px) {
+    .projects--container {
+      grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+.projects--nav {
+    margin: 0px 20px 0px 20px;
+}
+
+.projects--new {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 7px;
+}

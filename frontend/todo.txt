@@ -1,0 +1,17 @@
+1. Home page does not re-render after project is deleted // fixed 
+2. Task component 
+    2.1 Delete task not implemented 
+    2.2 Edit task not implemented 
+    2.3 Date component is displayed in weird format instead of eg: 29 June, 2023 
+    2.4 Priority component not implemented
+3. Project Creation add members should not be able to add self 
+4. UIUX of the website needs to be improved
+    4.1 Buttons / Links that can be pressed need to be clearer 
+    4.2 Need @media for page resizing 
+    4.3 Login / Register page looks kinda plain now 
+5. Deleting project does not cause tasks associated to be deleted together 
+
+Extras: 
+1. Project Creation add members filtering function 
+2. Profile page for setting profile pictures, maybe can provided a list of default profile pics 
+3. Delete account, Forget password (but no email link how to forget) 

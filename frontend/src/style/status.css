@@ -1,0 +1,19 @@
+.Completed,
+.NotCompleted{
+    padding: 10px;
+    width: auto;
+    text-align: center;
+    border-radius: 7px;
+    color: white;
+    margin-right: 15px;
+}
+
+.Completed {
+    background-color: blue;
+}
+
+.NotCompleted {
+    background-color: grey;
+}
+
+

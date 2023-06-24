@@ -1,0 +1,28 @@
+.projectCreation--container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 10%;
+}
+
+.projectCreation--select {
+    color: black;
+}
+
+.blueHeader {
+    color: #6988F6;
+    font-size: 30px;
+}
+
+.create--link {
+    color: #6988F6;
+    text-decoration: underline;
+}
+
+.createProject {
+    background-color: #6988F6;
+    color: white;
+    border: none;
+}
+

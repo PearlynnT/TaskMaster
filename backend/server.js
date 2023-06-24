@@ -13,6 +13,7 @@ const mongoose = require('mongoose');
 const connectDB = require('./config/dbConn');
 const PORT = process.env.PORT || 3500;
 
+
 // Connect to MongoDB
 connectDB();
 
@@ -31,10 +32,13 @@ app.use('/register', require('./routes/register'));
 app.use('/login', require('./routes/login'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
+app.use('/create', require('./routes/project'));
+app.use('/add', require('./routes/task'));
 
 app.use(verifyJWT);
-app.use('/users', require('./routes/api/users')); // change to tasks
+app.use('/users', require('./routes/api/users'));
 app.use('/projects', require('./routes/api/projects'))
+app.use('/tasks', require('./routes/api/tasks'))
 
 app.all('*', (req, res) => {
     res.status(404);
