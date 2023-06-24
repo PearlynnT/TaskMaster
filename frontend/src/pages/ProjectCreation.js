@@ -100,7 +100,7 @@ function ProjectCreation() {
         event.preventDefault();
 
         //const arr = [];
-        for (let i = 0; i < selectedOptions.length; i++) {
+        for (let i = 0; i < selectedOptions?.length; i++) {
             let { data } = await axiosPrivate.get(`/users/${selectedOptions[i].value}`);
             //arr.push(data._id);
             memb.push(data._id);

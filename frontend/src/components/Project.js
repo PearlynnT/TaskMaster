@@ -21,7 +21,7 @@ function Project(props) {
         <div className="project">
             <div className="project--header">
                 <h3 className='project--name'>{props.name}</h3>
-                <h4 className='project--member'>{props.members.length + 1 + ' members'}</h4>
+                <h4 className='project--member'>{props.members.length + 1 === 1 ? '1 member' : props.members.length + 1 + ' members'}</h4>
                 <button className='project--button' onClick={() => handleDelete(props._id)}>
                     <img className='project--delete' src={deleteIcon} alt='Delete Button' />
                 </button>
