@@ -171,7 +171,6 @@ function ProjectCreation() {
                             onChange={setSelectedOptions}
                             autoFocus={true}
                             placeholder = 'Add members'
-                            required
                         />
                         <button type="submit" className='createProject'>Create Project</button>
                     </form>

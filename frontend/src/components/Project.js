@@ -18,7 +18,7 @@ function Project(props) {
     }
 
     return (
-        <div className="project">
+        <div className="project" data-testid='project'>
             <div className="project--header">
                 <h3 className='project--name'>{props.name}</h3>
                 <h4 className='project--member'>{props.members.length + 1 === 1 ? '1 member' : props.members.length + 1 + ' members'}</h4>

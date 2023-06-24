@@ -3,7 +3,7 @@ import '../style/priority.css'
 
 export default function Priority(props) {
     return (
-        <div>
+        <div data-testid='priority'>
             {props.priority === 'High' 
             ? <High />
             : props.priority === 'Medium'
