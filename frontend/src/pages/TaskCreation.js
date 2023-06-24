@@ -160,6 +160,7 @@ function TaskCreation() {
                             onChange={setPriorityLvl}
                             autoFocus={true}
                             placeholder= 'Priority'
+                            required
                         />
                         <Select 
                             options={userOptions}
@@ -167,6 +168,7 @@ function TaskCreation() {
                             onChange={setAssign}
                             autoFocus={true}
                             placeholder='Assign members'
+                            required
                         />
                         <label htmlFor="date">Completed By:</label>
                         <DatePicker 
@@ -175,6 +177,7 @@ function TaskCreation() {
                             onChange={setDate}
                             dateFormat='dd/MM/yyyy'
                             minDate={new Date()}
+                            required
                             // showYearDropdown
                             // scrollableMonthYearDropdown
                         />
