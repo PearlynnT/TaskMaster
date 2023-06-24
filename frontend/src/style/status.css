@@ -1,20 +1,19 @@
-.completed, .onGoing, .stuck {
+.Completed,
+.NotCompleted{
     padding: 10px;
-    width: 100px;
+    width: auto;
     text-align: center;
     border-radius: 7px;
     color: white;
+    margin-right: 15px;
 }
 
-.completed {
-    background-color: #31DA42;
+.Completed {
+    background-color: blue;
 }
 
-.onGoing {
-    background-color: #ECE65C;
+.NotCompleted {
+    background-color: grey;
 }
 
-.stuck {
-    background-color: #EC5E5E;
-}
 

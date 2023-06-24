@@ -3,7 +3,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import Task from "./Task";
 import NewTask from "./NewTask";
 import '../style/tasksByProject.css'
-
+import '../style/task.css';
 
 function TasksByProject(props) {
     const [tasks, setTasks] = useState([]);
@@ -50,9 +50,20 @@ function TasksByProject(props) {
       ))}
     </div>
 
+    const title = <div className='tasksByProject--container'>
+        <div className="task--name">Name</div>
+        <div className="task--description">Description</div>
+        <div className='task--priority'>Priority </div>
+        <div className='task--date'>Deadline</div>
+        <div className='task--completed'>Status</div>
+        <div className="task--assignTo">Assigned To</div>
+        <div className='task--actions'>Actions</div>
+    </div>
+
     return (
         <div className='tbp--container'>
             <div className='tbp--name'>{props.name}</div>
+            {title}
             {taskView}
             <NewTask id = {props._id}/>
         </div>

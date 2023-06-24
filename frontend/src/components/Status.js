@@ -3,18 +3,14 @@ import '../style/status.css'
 
 export function Completed() {
     return (
-        <div className='completed'>Completed</div>
+        <div className='Completed'>Completed</div>
     );
 }
 
-export function OnGoing() {
+export function NotCompleted() {
     return (
-        <div className='onGoing'>OnGoing</div>
+        <div className='NotCompleted'>Not Completed</div>
     );
 }
 
-export function Stuck() {
-    return (
-        <div className='stuck'>Stuck</div>
-    );
-}
+

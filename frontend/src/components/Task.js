@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../style/task.css';
 import deleteIcon from '../icon/delete.png';
-import { Completed, OnGoing, Stuck } from './Status';
+import { Completed, NotCompleted } from './Status';
+import Priority from './Priority';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 function Task(props) {
@@ -44,17 +45,25 @@ function Task(props) {
           };
     }, [userName])
 
+    const date = new Date(props.date);
+    const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    };
+    const formattedDate = date.toLocaleString(undefined, options);
+
     return (
         <div className='task'>
             <div className="task--name">{props.name}</div>
             <div className="task--divider"></div>
             <div className="task--description">{props.description}</div>
             <div className="task--divider"></div>
-            <div className='task--status'>{props.priority}</div>
+            <div className='task--priority'><Priority priority={props.priority} /></div>
             <div className="task--divider"></div>
-            <div className='task--date'>{props.date}</div>
+            <div className='task--date'>{formattedDate}</div>
             <div className="task--divider"></div>
-            <div className='task--people'>{props.completed ? 'Completed' : 'Not completed'}</div>
+            <div className='task--completed'>{props.completed ? <Completed /> : <NotCompleted />}</div>
             <div className="task--divider"></div>
             <div className="task--assignTo">{userName}</div>
             <div className="task--divider"></div>

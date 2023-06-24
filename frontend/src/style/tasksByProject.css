@@ -6,3 +6,8 @@
     font-size: 30px;
     color: #7674F1;
 }
+
+.tasksByProject--container {
+    display: flex;
+    font-weight: bold;
+}
