@@ -24,6 +24,65 @@ function ProjectCreation() {
         setErrMsg('');
     }, [name, description])
 
+    useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+
+        const getOwner = async () => {
+            try {
+                const { data } = await axiosPrivate.get(
+                    "/users",
+                    {
+                      signal: controller.signal,
+                    }
+                );
+                const currentUser = data.filter((item) => (item.username === currUser));
+                if (isMounted) {
+                    setOwn(currentUser[0]._id);
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        getOwner();
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        };
+    }, [])
+
+    useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+
+        const getUsers = async () => {
+            try {
+                const { data } = await axiosPrivate.get(
+                    "/users",
+                    {
+                      signal: controller.signal,
+                    }
+                );
+                const option = data.map((item) => ({ // todo: filter out owner
+                    "value" : item._id,
+                    "label" : item.username
+                }))
+                setOptions(option);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        getUsers();
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        };
+    }, [])
+
     const handleSubmit = async event => {
         event.preventDefault();
 
