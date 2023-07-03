@@ -1,0 +1,13 @@
+20230703	15:03:23	38298680-4210-4cfc-9c56-576e08b8a17b	GET	http://localhost:3000	/refresh
+20230703	15:03:29	f34e184f-79b5-4e0b-b9b3-62607db15a01	OPTIONS	http://localhost:3000	/login
+20230703	15:03:29	82c6cf18-679c-4c25-84ed-6efbdc9539f0	POST	http://localhost:3000	/login
+20230703	15:03:30	8cd13ac4-c6e0-4fac-aac0-76be84bf4165	OPTIONS	http://localhost:3000	/users
+20230703	15:03:30	03a92e32-79c1-48b3-abf7-59ebe55f5534	GET	http://localhost:3000	/users
+20230703	15:03:30	a5443c34-4f70-4e61-a3ef-29417a6ace7b	OPTIONS	http://localhost:3000	/projects
+20230703	15:03:30	9143f84e-81df-4390-bcee-9a35e809eeda	GET	http://localhost:3000	/projects
+20230703	15:06:00	3fb6e7e8-6bcd-48aa-85bb-fb9bd1761d8a	OPTIONS	http://localhost:3000	/projects/64a25cec17aa150e95676278
+20230703	15:06:00	cc5502f6-55af-452a-b95e-44d0ff69a4e4	DELETE	http://localhost:3000	/projects/64a25cec17aa150e95676278
+20230703	15:06:00	a634621a-9050-4f92-8da7-024e6ec97ed8	OPTIONS	http://localhost:3000	/users
+20230703	15:06:00	e651d4a6-89cf-485d-ba96-02cf8556010e	GET	http://localhost:3000	/users
+20230703	15:06:00	b224c313-7ac7-4da8-b41a-bc64b710a911	OPTIONS	http://localhost:3000	/projects
+20230703	15:06:00	556d1ba8-59b8-46a4-a890-cb8434068c35	GET	http://localhost:3000	/projects
