@@ -60,7 +60,8 @@
     justify-content: space-evenly;
 }
 
-.task--delete {
+.task--delete,
+.task--edit {
     width: 25px;
 }
 
@@ -73,6 +74,13 @@
     margin: 0;
 }
 
-.task--button:hover {
+.task--button:hover, 
+.task--edit:hover {
     background-color: #D7D5D5;
 }
+
+.task--edit {
+    margin-top: 5px;
+}
+
+

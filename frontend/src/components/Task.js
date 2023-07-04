@@ -2,15 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../style/task.css';
 import deleteIcon from '../icon/delete.png';
+import editIcon from '../icon/edit.png';
 import { Completed, NotCompleted } from './Status';
 import Priority from './Priority';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import DeleteConfirmationModal from './DeleteConfirmationModal';
 
 function Task(props) {
     const axiosPrivate = useAxiosPrivate();
     const [userName, setUserName] = useState("");
-    
-    const handleDelete = async (id) => {
+
+    const [deleteToggle, setDeleteToggle] = useState(false);
+
+    const handleDelete = () => {
+        setDeleteToggle(true);
+    }
+
+    const onCancel = () => {
+        setDeleteToggle(false);
+    }
+
+    const onConfirm = async (id) => {
         try {
             const response = await axiosPrivate.delete(
                 `/tasks/${id}`
@@ -18,6 +30,7 @@ function Task(props) {
         } catch (err) {
             console.log(err);
         }
+        setDeleteToggle(false);
     }
 
     useEffect(() => {
@@ -69,9 +82,12 @@ function Task(props) {
             <div className="task--assignTo">{userName}</div>
             <div className="task--divider"></div>
             <div className='task--actions'>
-                <Link to={`/taskUpdate/${props._id}`}>Edit</Link>
-                <button className='task--button' onClick={() => handleDelete(props._id)}><img className='task--delete' src={deleteIcon} alt='Delete Button' /></button>
+                <Link to={`/taskUpdate/${props._id}`}>
+                    <img src = {editIcon} className = 'task--edit'/>
+                </Link>
+                <button className='task--button' onClick={handleDelete}><img className='task--delete' src={deleteIcon} alt='Delete Button' /></button>
             </div>
+            <DeleteConfirmationModal isOpen={deleteToggle} onCancel={onCancel} onConfirm={() => onConfirm(props._id)} />
         </div>
     );
 }
