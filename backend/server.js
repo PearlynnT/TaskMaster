@@ -37,8 +37,10 @@ app.use('/add', require('./routes/task'));
 
 app.use(verifyJWT);
 app.use('/users', require('./routes/api/users'));
-app.use('/projects', require('./routes/api/projects'))
-app.use('/tasks', require('./routes/api/tasks'))
+app.use('/projects', require('./routes/api/projects'));
+app.use('/tasks', require('./routes/api/tasks'));
+app.use('/chats', require('./routes/api/chats'));
+app.use('/messages', require('./routes/api/messages'));
 
 app.all('*', (req, res) => {
     res.status(404);
@@ -57,3 +59,6 @@ mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
+
+
+// todo: socket.io
