@@ -8,6 +8,7 @@ import RequireAuth from './components/RequireAuth';
 import ProjectCreation from './pages/ProjectCreation';
 import TaskCreation from './pages/TaskCreation';
 import TasksByProject from './components/TasksByProject';
+import TaskUpdate from './pages/TaskUpdate';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="projectCreation" element={<ProjectCreation />} />
             <Route path="taskCreation/:id" element={<TaskCreation />} />
             <Route path="tasks/:id" element={<TasksByProject />} />
+            <Route path="taskUpdate/:id" element={<TaskUpdate />} />
           </Route>
         </Route>
       </Route>

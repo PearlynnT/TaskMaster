@@ -44,7 +44,7 @@ function TasksByProject(props) {
         <div key={i}>
           {<Task 
             {...task}
-            toggle = {props.toggle}
+            toggle={props.toggle}
             />}
         </div>
       ))}
@@ -65,7 +65,7 @@ function TasksByProject(props) {
             <div className='tbp--name'>{props.name}</div>
             {title}
             {taskView}
-            <NewTask id = {props._id}/>
+            <NewTask id={props._id}/>
         </div>
     )
 }

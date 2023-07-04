@@ -60,19 +60,20 @@ const createNewTask = async (req, res) => {
 }
 
 const updateTask = async (req, res) => {
+    console.log(req.body)
     const updates = Object.keys(req.body);
-    const allowedUpdates = ["description", "priority", "date"];
+    const allowedUpdates = ["description", "priority", "date", "completed"];
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
     if (!isValidOperation) {
         return res.status(400).json({ 'message': 'Invalid operation' });
     }
     try {
-        if (!req?.body?.id) {
-            return res.status(400).json({ 'message': 'Task ID required.' });
-        }
-        const task = await Task.findOne({ _id: req.body.id }).exec();
+        // if (!req?.body?.id) {
+        //     return res.status(400).json({ 'message': 'Task ID required.' });
+        // }
+        const task = await Task.findOne({ _id: req.params.id }).exec();
         if (!task) {
-            return res.status(204).json({ "message": `No task matches ID ${req.body.id}.` });
+            return res.status(204).json({ "message": `No task matches ID ${req.params.id}.` });
         }
         updates.forEach((update) => (task[update] = req.body[update]));
         const result = await task.save();

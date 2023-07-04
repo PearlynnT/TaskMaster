@@ -96,7 +96,7 @@ function Home() {
         <button className={`toggle--projects ${isToggled ? 'toggled' : ''}`} onClick={handleToggle}>Projects</button>
         <button className={`toggle--tasks ${!isToggled ? 'toggled' : ''}`} onClick={handleToggle}>Tasks</button>
       </div>
-      {isToggled ? <Projects projects = {projects} toggle = {toggle}/> : <Tasks projects = {projects} toggle = {toggle}/>}
+      {isToggled ? <Projects projects={projects} toggle={toggle}/> : <Tasks projects={projects} toggle={toggle}/>}
     </div>
   );
 }

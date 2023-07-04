@@ -19,6 +19,7 @@ const createNewProject = async (req, res) => {
         return res.status(400).json({ 'message': 'All fields are required' });
     }
     try {
+        console.log(req.body)
         const result = await Project.create({
             owner: new mongoose.Types.ObjectId(req.body.own), // req.owner.id 
             members: req.body.memb.map(x => new mongoose.Types.ObjectId(x)), 
@@ -32,6 +33,7 @@ const createNewProject = async (req, res) => {
 }
 
 const updateProject = async (req, res) => {
+    console.log(req.body)
     const updates = Object.keys(req.body);
     const allowedUpdates = ["description", "completed"];
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update));

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import '../style/task.css';
 import deleteIcon from '../icon/delete.png';
 import { Completed, NotCompleted } from './Status';
@@ -68,6 +69,7 @@ function Task(props) {
             <div className="task--assignTo">{userName}</div>
             <div className="task--divider"></div>
             <div className='task--actions'>
+                <Link to={`/taskUpdate/${props._id}`}>Edit</Link>
                 <button className='task--button' onClick={() => handleDelete(props._id)}><img className='task--delete' src={deleteIcon} alt='Delete Button' /></button>
             </div>
         </div>

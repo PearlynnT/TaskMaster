@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../style/project.css';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import deleteIcon from '../icon/delete.png';
-import DeleteConformationModal from './DeleteConformationModal';
+import DeleteConfirmationModal from './DeleteConfirmationModal';
 
 function Project(props) {
     const axiosPrivate = useAxiosPrivate();
@@ -43,7 +43,7 @@ function Project(props) {
                 <div className='divider'></div>
                 <p className='project--description'>{props.description}</p>
             </div>
-            <DeleteConformationModal isOpen={deleteToggle} onCancel={onCancel} onConfirm={() => onConfirm(props._id)} />
+            <DeleteConfirmationModal isOpen={deleteToggle} onCancel={onCancel} onConfirm={() => onConfirm(props._id)} />
         </div>
         
     )
