@@ -53,7 +53,39 @@ app.all('*', (req, res) => {
 
 app.use(errorHandler);
 
+// socket.io for chat 
+const http = require("http");
+const { Server } = require("socket.io");
+
+const server = http.createServer(app);
+
+const io = new Server(server, {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"]
+    }
+});
+
+io.use
+
+// listen on the connection event for incoming sockets 
+io.on("connection", (socket) => {
+    console.log("User connected", socket.id);
+
+    socket.on("send_message", (data) => {
+        socket.to(data.room).emit("receive_message", data); // .to is to specify only users in same room can receive message 
+    });
+
+    socket.on("disconnect", () => {
+        console.log("User disconnected", socket.id);
+    });
+})
+
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
+
+
+
+

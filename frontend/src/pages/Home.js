@@ -4,12 +4,27 @@ import useAuth from '../hooks/useAuth';
 import Header from '../components/Header';
 import Projects from '../components/Projects';
 import Tasks from '../components/Tasks';
+import Chats from '../components/Chats';
+
 import '../style/toggle.css';
 
 function Home() {
-  const [isToggled, setIsToggled] = useState(true);
-  const handleToggle = () => {
-    setIsToggled(!isToggled);
+  const [toggleCount, setToggleCount] = useState(1);
+
+  const handleProjectToggle = () => {
+    setToggleCount(1);
+  };
+
+  const handleTaskToggle = () => {
+    setToggleCount(2);
+  };
+
+  const handleChatToggle = () => {
+    setToggleCount(3);
+  };
+
+  const handleStatsToggle = () => {
+    setToggleCount(4);
   };
 
   const [projects, setProjects] = useState([]);
@@ -79,9 +94,6 @@ function Home() {
     };
 
     getUser().then(() => getProjects());
-    for (let proj of projects) {
-      console.log(proj);
-    }
 
     return () => {
       isMounted = false;
@@ -93,10 +105,18 @@ function Home() {
     <div>
       <Header />
       <div className='toggle--container'>
-        <button className={`toggle--projects ${isToggled ? 'toggled' : ''}`} onClick={handleToggle}>Projects</button>
-        <button className={`toggle--tasks ${!isToggled ? 'toggled' : ''}`} onClick={handleToggle}>Tasks</button>
+        <button className={`toggle--projects ${toggleCount == 1 ? 'toggled' : ''}`} onClick={handleProjectToggle}>Projects</button>
+        <button className={`toggle--tasks ${toggleCount == 2 ? 'toggled' : ''}`} onClick={handleTaskToggle}>Tasks</button>
+        <button className={`toggle--tasks ${toggleCount == 3 ? 'toggled' : ''}`} onClick={handleChatToggle}>Chats</button>
+        <button className={`toggle--tasks ${toggleCount == 4 ? 'toggled' : ''}`} onClick={handleStatsToggle}>Stats</button>
       </div>
-      {isToggled ? <Projects projects={projects} toggle={toggle}/> : <Tasks projects={projects} toggle={toggle}/>}
+      {toggleCount == 1 
+        ? <Projects projects={projects} toggle={toggle}/> 
+        : toggleCount == 2
+        ? <Tasks projects={projects} toggle={toggle}/>
+        : toggleCount == 3 
+        ? <Chats projects={projects}/>
+        : <h1>Stats</h1>}
     </div>
   );
 }
