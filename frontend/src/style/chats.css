@@ -128,3 +128,8 @@
     margin-right: 25px;
     color: #D7D5D5;
 }
+
+.chats--msg--container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

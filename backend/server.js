@@ -72,6 +72,11 @@ io.use
 io.on("connection", (socket) => {
     console.log("User connected", socket.id);
 
+    socket.on("join_room", (data) => {
+        socket.join(data);
+        console.log(`User with ID: ${socket.id} joined room ${data}`)
+    });
+
     socket.on("send_message", (data) => {
         socket.to(data.room).emit("receive_message", data); // .to is to specify only users in same room can receive message 
     });
@@ -83,7 +88,7 @@ io.on("connection", (socket) => {
 
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
 
 

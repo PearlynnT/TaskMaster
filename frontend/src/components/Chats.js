@@ -3,45 +3,62 @@ import '../style/chats.css';
 import sendIcon from '../icon/sendMessage.png';
 import useAuth from '../hooks/useAuth';
 import io from 'socket.io-client';
+import ScrollToBottom from 'react-scroll-to-bottom';
 
 function Chats( { projects }) {
-    const socket = io.connect('http://localhost:3500');
     const { currUser } = useAuth();
+    const [socket, setSocket] = useState(null);
     const [room, setRoom] = useState("");
     const [currentProject, setCurrentProject] = useState(null);
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
 
+    useEffect(() => {
+        const newSocket = io.connect('http://localhost:3500');
+        setSocket(newSocket);
+
+        // Cleanup function to disconnect socket on component unmount
+        return () => {
+            newSocket.disconnect();
+        };
+    }, []);
+
+    const joinRoom = (room) => {
+        socket.emit("join_room", room);
+        setRoom(room);
+    }
+
     const selectProject = (proj) => {
         if (proj !== currentProject) {
             setCurrentProject(proj);
-            setRoom(proj._id);
-            alert(`Alert is for testing\nJoined chat room ${proj._id} `);
+            joinRoom(proj._id);
+            alert(`Alert is for testing\nJoined chat room ${proj._id}`);
             setMessageList([]);
         }
     }
 
-    const sendMessage = async () => {
+    const sendMessage = () => {
         if (currentMessage !== "" && room !== "") {
             const messageData = {
                 room: room,
                 owner: currUser,
                 message: currentMessage,
-                time: new Date(Date.now()).getHours() 
-                + ":" + 
-                new Date(Date.now()).getMinutes()
+                time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes()
             };
-            await socket.emit("send_message", messageData);
+            socket.emit("send_message", messageData);
             setMessageList((list) => [...list, messageData]);
             setCurrentMessage("");
         }
     }
 
     useEffect(() => {
-        socket.on("receive_message", (data) => {
-            setMessageList((list) => [...list, data]);
-        });
-    }, [socket]);    
+        if (socket) {
+            socket.on("receive_message", (data) => {
+                setMessageList((list) => [...list, data]);
+            });
+        }
+    }, [socket]);
+
 
     return (
         <div className="chats--container">
@@ -62,13 +79,15 @@ function Chats( { projects }) {
                     {currentProject?.name}
                 </div>
                 <div className="chats--body">
-                    {messageList?.map(msg => (
-                        <div className={msg.owner === currUser ? 'chats--entry--left' : 'chats--entry--right'}>
-                            <div className="chats--name">{msg.owner}</div>
-                            <div className="chats--msg"> {msg.message}</div>
-                            <div className="chats--time">{msg.time}</div>
-                        </div>
-                    ))}
+                    <ScrollToBottom className="chats--msg--container"> 
+                        {messageList?.map(msg => (
+                            <div className={msg.owner === currUser ? 'chats--entry--left' : 'chats--entry--right'}>
+                                <div className="chats--name">{msg.owner}</div>
+                                <div className="chats--msg"> {msg.message}</div>
+                                <div className="chats--time">{msg.time}</div>
+                            </div>
+                        ))}
+                    </ScrollToBottom>
                 </div>
                 <div className="chats--footer">
                     <input 
@@ -77,6 +96,9 @@ function Chats( { projects }) {
                         value={currentMessage}
                         onChange={(event) => {
                             setCurrentMessage(event.target.value)
+                        }}
+                        onKeyPress={(event) => {
+                            event.key === "Enter" && sendMessage();
                         }}
                     />
                     <button className='chats--button' style={{marginLeft:"10px"}} onClick={sendMessage}>
