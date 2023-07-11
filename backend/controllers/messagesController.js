@@ -1,4 +1,5 @@
 const Message = require('../model/Message');
+const Chat = require('../model/Chat');
 const mongoose = require('mongoose');
 
 const getAllMessages = async (req, res) => {
@@ -19,6 +20,8 @@ const createNewMessage = async (req, res) => {
         const result = await Message.create({
             ...req.body // todo: new mongoose.Types.ObjectId
         });
+        await Chat.findByIdAndUpdate(req.body.chat, { latestMsg: new mongoose.Types.ObjectId(result._id) }); // tocheck
+        res.status(201).json(result);
     } catch (err) {
         console.error(err);
         return res.status(500).json({ 'message': 'Internal Server Error' });

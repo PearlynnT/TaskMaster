@@ -19,6 +19,7 @@ const createNewChat = async (req, res) => {
         const result = await Chat.create({
             ...req.body // todo: new mongoose.Types.ObjectId
         });
+        res.status(201).json(result);
     } catch (err) {
         console.error(err);
         return res.status(500).json({ 'message': 'Internal Server Error' });
