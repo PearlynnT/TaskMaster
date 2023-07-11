@@ -1,3 +1,5 @@
+// not used
+
 const express = require('express');
 const router = express.Router();
 const chatsController = require('../../controllers/chatsController');

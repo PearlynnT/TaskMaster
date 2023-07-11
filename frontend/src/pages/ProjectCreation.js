@@ -114,6 +114,13 @@ function ProjectCreation() {
                     headers: { 'Content-Type': 'application/json' }
                 }
             );
+            // create new chat when a new project is created
+            // const res = await axios.post('/chats',
+            //     JSON.stringify({ own, memb }),
+            //     {
+            //         headers: { 'Content-Type': 'application/json' }
+            //     }
+            // );
             setSuccess(true);
             setOwn(null);
             setName('');

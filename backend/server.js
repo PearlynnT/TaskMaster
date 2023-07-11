@@ -34,12 +34,13 @@ app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 app.use('/create', require('./routes/project')); // may not need this, if deleted, need to change fe url
 app.use('/add', require('./routes/task'));
+app.use('/msg', require('./routes/message'));
 
 app.use(verifyJWT);
 app.use('/users', require('./routes/api/users'));
 app.use('/projects', require('./routes/api/projects'));
 app.use('/tasks', require('./routes/api/tasks'));
-app.use('/chats', require('./routes/api/chats'));
+//app.use('/chats', require('./routes/api/chats'));
 app.use('/messages', require('./routes/api/messages'));
 
 app.all('*', (req, res) => {
@@ -63,7 +64,8 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "https://task-master-app-vut5.onrender.com",
+        //origin: "https://task-master-app-vut5.onrender.com",
+        origin: "http://localhost:3000",
         methods: ["GET", "POST"]
     }
 });

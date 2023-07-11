@@ -1,5 +1,5 @@
 const Message = require('../model/Message');
-const Chat = require('../model/Chat');
+//const Chat = require('../model/Chat');
 const mongoose = require('mongoose');
 
 const getAllMessages = async (req, res) => {
@@ -18,9 +18,12 @@ const getAllMessages = async (req, res) => {
 const createNewMessage = async (req, res) => {
     try {
         const result = await Message.create({
-            ...req.body // todo: new mongoose.Types.ObjectId
+            project: new mongoose.Types.ObjectId(req.body.projId),
+            sender: new mongoose.Types.ObjectId(req.body.send),
+            text: req.body.currentMessage
+            //...req.body
         });
-        await Chat.findByIdAndUpdate(req.body.chat, { latestMsg: new mongoose.Types.ObjectId(result._id) }); // tocheck
+        //await Chat.findByIdAndUpdate(req.body.chat, { latestMsg: new mongoose.Types.ObjectId(result._id) }); // tocheck
         res.status(201).json(result);
     } catch (err) {
         console.error(err);

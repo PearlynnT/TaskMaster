@@ -1,3 +1,5 @@
+// not used
+
 const Chat = require('../model/Chat');
 const mongoose = require('mongoose');
 
@@ -17,7 +19,10 @@ const getAllChats = async (req, res) => {
 const createNewChat = async (req, res) => {
     try {
         const result = await Chat.create({
-            ...req.body // todo: new mongoose.Types.ObjectId
+            admin: new mongoose.Types.ObjectId(req.body.own),
+            members: req.body.memb.map(x => new mongoose.Types.ObjectId(x)),
+            latestMsg: null // tocheck
+            //...req.body 
         });
         res.status(201).json(result);
     } catch (err) {

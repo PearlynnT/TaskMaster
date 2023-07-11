@@ -111,11 +111,11 @@ function Home() {
         <button className={`toggle--tasks ${toggleCount == 4 ? 'toggled' : ''}`} onClick={handleStatsToggle}>Stats</button>
       </div>
       {toggleCount == 1 
-        ? <Projects projects={projects} toggle={toggle}/> 
+        ? <Projects projects={projects} toggle={toggle} /> 
         : toggleCount == 2
-        ? <Tasks projects={projects} toggle={toggle}/>
+        ? <Tasks projects={projects} toggle={toggle} />
         : toggleCount == 3 
-        ? <Chats projects={projects}/>
+        ? <Chats projects={projects} />
         : <h1>Stats</h1>}
     </div>
   );

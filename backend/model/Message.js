@@ -3,9 +3,13 @@ const Schema = mongoose.Schema;
 
 const messageSchema = new Schema(
     {
-        chat: {
+        // chat: {
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: "Chat"
+        // },
+        project: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Chat"
+            ref: "Project"
         },
         sender: {
             type: mongoose.Schema.Types.ObjectId,
