@@ -14,7 +14,7 @@ function Chats( { projects }) {
     const [messageList, setMessageList] = useState([]);
 
     useEffect(() => {
-        const newSocket = io.connect('http://localhost:3500');
+        const newSocket = io.connect('https://task-master-evop.onrender.com');
         setSocket(newSocket);
 
         // Cleanup function to disconnect socket on component unmount
