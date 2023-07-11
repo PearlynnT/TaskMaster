@@ -55,10 +55,40 @@ app.all('*', (req, res) => {
 
 app.use(errorHandler);
 
-mongoose.connection.once('open', () => {
-    console.log('Connected to MongoDB');
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// socket.io for chat 
+const http = require("http");
+const { Server } = require("socket.io");
+
+const server = http.createServer(app);
+
+const io = new Server(server, {
+    cors: {
+        origin: "https://task-master-app-vut5.onrender.com",
+        methods: ["GET", "POST"]
+    }
 });
 
+io.use
 
-// todo: socket.io
+// listen on the connection event for incoming sockets 
+io.on("connection", (socket) => {
+    console.log("User connected", socket.id);
+
+    socket.on("join_room", (data) => {
+        socket.join(data);
+        console.log(`User with ID: ${socket.id} joined room ${data}`)
+    });
+
+    socket.on("send_message", (data) => {
+        socket.to(data.room).emit("receive_message", data); // .to is to specify only users in same room can receive message 
+    });
+
+    socket.on("disconnect", () => {
+        console.log("User disconnected", socket.id);
+    });
+})
+
+mongoose.connection.once('open', () => {
+    console.log('Connected to MongoDB');
+    server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+});

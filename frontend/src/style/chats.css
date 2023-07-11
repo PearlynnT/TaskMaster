@@ -1,0 +1,135 @@
+.chats--container {
+    height: 89vh;
+    display: flex;
+}
+
+.chats--left {
+    border: 1px solid #D7D5D5;
+    width: 20%;
+    margin: 25px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.chats--right {
+    border: 1px solid #D7D5D5;
+    width: 78%;
+    margin: 25px 25px 25px 0px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chats--group--on {
+    background-color: #6988F6;
+    border-radius: 20px;
+    height: 60px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    margin: 3%;
+    width: 94%;
+}
+
+.chats--group--off {
+    background-color: white;
+    border-radius: 20px;
+    border: 1px solid #D7D5D5;
+    height: 60px;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3%;
+    width: 94%;
+}
+
+.chats--send {
+    width: 18px;
+    background-color: none;
+    border: none;
+}
+
+.chats--button {
+    border: 1px solid #D7D5D5;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.chats--button:hover {
+     background-color: #6988F6;
+}
+
+.chats--header {
+    background-color: #6988F6;
+    border-radius: 25px;
+    height: 7%;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.chats--body {
+    border: 1px solid #D7D5D5;
+    margin: 0px 10px 10px 10px;
+    border-radius: 25px;
+    height: 84%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chats--footer {
+    background-color: #6988F6;
+    border: 1px solid #D7D5D5;
+    margin: 0px 10px 10px 10px;
+    border-radius: 25px;
+    height: 7%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chats--entry--left {
+    border: 1px solid #D7D5D5;
+    width: 40%;
+    border-radius: 25px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chats--entry--right {
+    border: 1px solid #D7D5D5;
+    width: 40%;
+    border-radius: 25px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+}
+
+.chats--name {
+    font-size: 20px;
+    color: #6988F6;
+    margin-left: 25px;
+}
+
+.chats--msg {
+    margin-left: 25px;
+}
+
+.chats--time {
+    margin-left: auto;
+    margin-right: 25px;
+    color: #D7D5D5;
+}
+
+.chats--msg--container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
