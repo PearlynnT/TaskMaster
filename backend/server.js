@@ -32,7 +32,7 @@ app.use('/register', require('./routes/register'));
 app.use('/login', require('./routes/login'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
-app.use('/create', require('./routes/project'));
+app.use('/create', require('./routes/project')); // may not need this, if deleted, need to change fe url
 app.use('/add', require('./routes/task'));
 
 app.use(verifyJWT);
