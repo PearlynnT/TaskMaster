@@ -71,22 +71,52 @@ function Chats({ projects }) {
             setCurrentProject(proj);
             setProjId(proj._id);
             joinRoom(proj._id);
-            alert(`Alert is for testing\nJoined chat room ${proj._id}`);
-            setMessageList([]);
         }
     }
 
+    useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+
+        const getSavedMessages = async () => {
+            try {
+                const { data } = await axiosPrivate.get(
+                    "/messages",
+                    {
+                      signal: controller.signal,
+                    }
+                );
+                console.log(`Length of data: ${data.length}`);
+                const projectMessages = data.filter((item) => (item.room === room));
+                if (isMounted) {
+                    setMessageList(projectMessages);
+                    console.log(`Message length: ${messageList.length}`);
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        getSavedMessages();
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        };
+    }, [room])
+
     const sendMessage = async () => {
         if (currentMessage !== "" && room !== "") {
+            const time = new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes();
             const messageData = {
                 room: room,
                 owner: currUser,
                 message: currentMessage,
-                time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes()
+                time: time
             };
             try {
                 const response = await axios.post(MESSAGE_URL,
-                    JSON.stringify({ projId, send, currentMessage }),
+                    JSON.stringify({ projId, currUser, currentMessage, time }),
                     {
                         headers: { 'Content-Type': 'application/json' }
                     }

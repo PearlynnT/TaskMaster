@@ -18,9 +18,10 @@ const getAllMessages = async (req, res) => {
 const createNewMessage = async (req, res) => {
     try {
         const result = await Message.create({
-            project: new mongoose.Types.ObjectId(req.body.projId),
-            sender: new mongoose.Types.ObjectId(req.body.send),
-            text: req.body.currentMessage
+            room: new mongoose.Types.ObjectId(req.body.projId),
+            owner: req.body.currUser,
+            message: req.body.currentMessage,
+            time: req.body.time
             //...req.body
         });
         //await Chat.findByIdAndUpdate(req.body.chat, { latestMsg: new mongoose.Types.ObjectId(result._id) }); // tocheck
