@@ -7,16 +7,21 @@ const messageSchema = new Schema(
         //     type: mongoose.Schema.Types.ObjectId,
         //     ref: "Chat"
         // },
-        project: {
+        room: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Project"
+            required: true
         },
-        sender: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+        owner: {
+            type: String,
+            required: true
         },
-        text: {
-            type: String
+        message: {
+            type: String,
+            required: true
+        }, 
+        time: {
+            type: String,
+            required: true
         }
     },
     {
