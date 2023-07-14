@@ -8,6 +8,36 @@ function Project(props) {
     const axiosPrivate = useAxiosPrivate();
     const toggle = props.toggle;
     const [deleteToggle, setDeleteToggle] = useState(false);
+    const [projTasks, setProjTasks] = useState(null);
+
+    useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+
+        const getTasks = async () => {
+            try {
+                const { data } = await axiosPrivate.get(
+                    "/tasks",
+                    {
+                      signal: controller.signal,
+                    }
+                );
+                const tasks = data.filter((item) => (item.project.toString() === props._id));
+                if (isMounted) {
+                    setProjTasks(tasks);
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        getTasks();
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        };
+    }, []);
 
     const handleDelete = () => {
         setDeleteToggle(true);
@@ -17,11 +47,24 @@ function Project(props) {
         setDeleteToggle(false);
     }
 
+    // delete tasks when project is deleted
+    const deleteTasks = async () => {
+        try {
+            for (let i = 0; i < projTasks.length; i++) {
+                const response = await axiosPrivate.delete(
+                    `/tasks/${projTasks[i]._id}`
+                );
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     const onConfirm = async (id) => {
         try {
             const response = await axiosPrivate.delete(
                 `/projects/${id}`
-            ).then(() => toggle());
+            ).then(() => toggle()).then(() => deleteTasks());
         } catch (err) {
             console.log(err);
         }
