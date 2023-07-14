@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Projects from '../components/Projects';
 import Tasks from '../components/Tasks';
 import Chats from '../components/Chats';
+import Stats from '../components/Stats';
 
 import '../style/toggle.css';
 
@@ -116,7 +117,7 @@ function Home() {
         ? <Tasks projects={projects} toggle={toggle} />
         : toggleCount == 3 
         ? <Chats projects={projects} />
-        : <h1>Stats</h1>}
+        : <Stats />}
     </div>
   );
 }

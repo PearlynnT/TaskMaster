@@ -19,7 +19,7 @@ function Chats({ projects }) {
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
     const [projId, setProjId] = useState(null);
-    const [send, setSend] = useState(null)
+    const [send, setSend] = useState(null);
 
     useEffect(() => {
         //const newSocket = io.connect('https://task-master-evop.onrender.com');
