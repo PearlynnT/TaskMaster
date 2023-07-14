@@ -133,3 +133,9 @@
     overflow-y: scroll;
     overflow-x: hidden;
 }
+
+.typing {
+    margin-bottom: 15;
+    margin-left: 0;
+    width: 50px;
+}

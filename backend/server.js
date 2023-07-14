@@ -75,11 +75,15 @@ io.use
 // listen on the connection event for incoming sockets 
 io.on("connection", (socket) => {
     console.log("User connected", socket.id);
+    socket.emit("connected");
 
     socket.on("join_room", (data) => {
         socket.join(data);
         console.log(`User with ID: ${socket.id} joined room ${data}`)
     });
+
+    socket.on("typing", (room) => socket.in(room).emit("typing"));
+    socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
 
     socket.on("send_message", (data) => {
         socket.to(data.room).emit("receive_message", data); // .to is to specify only users in same room can receive message 

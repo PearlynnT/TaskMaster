@@ -66,7 +66,7 @@ function Stats() {
                 if (membProject.length !== 0) {
                     arr.push(membProject);
                 }
-                for (let i = 0; i < arr[0].length; i++) { // remove opp element from arr
+                for (let i = 0; i < arr[0].length; i++) { 
                     if (arr[0][i].completed) {
                         arr[0].splice(i, 1);
                     }

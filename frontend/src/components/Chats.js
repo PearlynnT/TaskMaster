@@ -6,6 +6,8 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import useAuth from '../hooks/useAuth';
 import io from 'socket.io-client';
 import ScrollToBottom from 'react-scroll-to-bottom';
+import Lottie from "lottie-react";
+import animationData from "../animations/typing.json";
 
 const MESSAGE_URL = '/msg';
 
@@ -20,11 +22,18 @@ function Chats({ projects }) {
     const [messageList, setMessageList] = useState([]);
     const [projId, setProjId] = useState(null);
     const [send, setSend] = useState(null);
+    const [socketConnected, setSocketConnected] = useState(false);
+    const [typing, setTyping] = useState(false);
+    const [isTyping, setIsTyping] = useState(false);
 
     useEffect(() => {
         //const newSocket = io.connect('https://task-master-evop.onrender.com');
         const newSocket = io.connect('http://localhost:3500');
         setSocket(newSocket);
+
+        newSocket.on("connected", () => setSocketConnected(true));
+        newSocket.on("typing", () => setIsTyping(true));
+        newSocket.on("stop typing", () => setIsTyping(false));
 
         // Cleanup function to disconnect socket on component unmount
         return () => {
@@ -107,6 +116,7 @@ function Chats({ projects }) {
 
     const sendMessage = async () => {
         if (currentMessage !== "" && room !== "") {
+            socket.emit("stop typing", projId);
             const time = new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes();
             const messageData = {
                 room: room,
@@ -140,6 +150,26 @@ function Chats({ projects }) {
         }
     }, [socket]);
 
+    const typingHandler = (e) => {
+        setCurrentMessage(e.target.value);
+
+        if (!socketConnected) return;
+
+        if (!typing) {
+            setTyping(true);
+            socket.emit("typing", projId);
+        }
+        let lastTypingTime = new Date().getTime();
+        let timerLength = 3000;
+        setTimeout(() => {
+            let timeNow = new Date().getTime();
+            let timeDiff = timeNow - lastTypingTime;
+            if (timeDiff >= timerLength && typing) {
+                socket.emit("stop typing", projId);
+                setTyping(false);
+            }
+        }, timerLength);
+    };
 
     return (
         <div className="chats--container">
@@ -169,15 +199,25 @@ function Chats({ projects }) {
                             </div>
                         ))}
                     </ScrollToBottom>
+                    {isTyping ? (
+                        <div>
+                            <Lottie
+                                className="typing"
+                                loop
+                                autoplay
+                                animationData={animationData}
+                            />
+                        </div>
+                    ) : (
+                        <></>
+                    )}
                 </div>
                 <div className="chats--footer">
                     <input 
                         type="text" 
                         placeholder='Message' 
                         value={currentMessage}
-                        onChange={(event) => {
-                            setCurrentMessage(event.target.value)
-                        }}
+                        onChange={typingHandler}
                         onKeyPress={(event) => {
                             event.key === "Enter" && sendMessage();
                         }}
