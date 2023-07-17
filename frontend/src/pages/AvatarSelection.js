@@ -5,6 +5,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import axios from '../api/axios';
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate} from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
 function AvatarSelection() {
     const axiosPrivate = useAxiosPrivate();
@@ -14,6 +15,8 @@ function AvatarSelection() {
     const [avatars, setAvatars] = useState([]);
     const [toggle, setToggle] = useState(true);
     const [selectedIndex, setSelectedIndex] = useState(null);
+    const { currUser } = useAuth();
+    const [currUserId, setCurrUserId] = useState("");
 
     const refresh = () => {
         setToggle(!toggle);
@@ -21,11 +24,47 @@ function AvatarSelection() {
         setSelectedIndex(null);
     }
 
-    const confirm = () => {
-        if (selectedIndex !== null) {
-            navigate("/", { replace: true });
-        }
-    }
+    const confirm = async () => {
+      try {
+          if (selectedIndex !== null) {
+              const avatar = avatars[selectedIndex];
+              await axiosPrivate.put(`/users/${currUserId}`, { avatar });
+              navigate('/', { replace: true });
+          }
+      } catch (error) {
+          console.log('Error updating avatar:', error);
+      }
+    };
+  
+
+    useEffect(() => {
+      let isMounted = true;
+      const controller = new AbortController();
+
+      const getCurrUserId = async () => {
+          try {
+              const { data } = await axiosPrivate.get(
+                  "/users",
+                  {
+                    signal: controller.signal,
+                  }
+              );
+              const currentUser = data.filter((item) => (item.username === currUser));
+              if (isMounted) {
+                  setCurrUserId(currentUser[0]._id);
+              }
+          } catch (err) {
+              console.log(err);
+          }
+      };
+
+      getCurrUserId();
+
+      return () => {
+          isMounted = false;
+          controller.abort();
+      };
+    }, [])
 
     useEffect(() => {
         let isMounted = true;
@@ -41,7 +80,6 @@ function AvatarSelection() {
             );
             const buffer = Buffer.from(image.data, "binary");
             data.push(buffer.toString("base64"));
-            console.log(i);
           } catch (err) {
             console.log(err);
           }
