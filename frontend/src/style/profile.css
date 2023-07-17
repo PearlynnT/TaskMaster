@@ -1,0 +1,16 @@
+.profile--container {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+}
+
+.profile--name {
+    font-size: 25px;
+}
+
+.profile--icon {
+    width: 40px;
+    margin-right: 10px;
+}

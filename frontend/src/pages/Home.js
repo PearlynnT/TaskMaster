@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Projects from '../components/Projects';
 import Tasks from '../components/Tasks';
 import Chats from '../components/Chats';
+import Stats from '../components/Stats';
 
 import '../style/toggle.css';
 
@@ -111,12 +112,12 @@ function Home() {
         <button className={`toggle--tasks ${toggleCount == 4 ? 'toggled' : ''}`} onClick={handleStatsToggle}>Stats</button>
       </div>
       {toggleCount == 1 
-        ? <Projects projects={projects} toggle={toggle}/> 
+        ? <Projects projects={projects} toggle={toggle} /> 
         : toggleCount == 2
-        ? <Tasks projects={projects} toggle={toggle}/>
+        ? <Tasks projects={projects} toggle={toggle} />
         : toggleCount == 3 
-        ? <Chats projects={projects}/>
-        : <h1>Stats</h1>}
+        ? <Chats projects={projects} />
+        : <Stats />}
     </div>
   );
 }

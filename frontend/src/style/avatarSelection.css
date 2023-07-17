@@ -1,0 +1,42 @@
+.avatar--header {
+    font-size: 50px;
+    margin: 30px;
+}
+
+.avatar--container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.avatar--image {
+    width: 150px;
+    margin: 10px;
+}
+
+.avatar--selected {
+    background-color: #6988F6;
+}
+
+.avatar--refresh,
+.avatar--confirm {
+    background-color: #6988F6;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.avatar--buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px;
+}
+
+.avatar--icons {
+    height: 170px;
+}
+
