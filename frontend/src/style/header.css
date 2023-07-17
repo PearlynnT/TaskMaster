@@ -12,5 +12,56 @@
     font-size: 30px;
 }
 
+.header--actions {
+    align-items: center;
+    display: flex;
+}
 
+.header--button {
+    cursor: pointer;
+    margin-left: 15px;
+    position: relative;
+}
 
+.header--notifications {
+    height: 30px;
+    width: 30px;
+}
+
+.header--notificationCount {
+    align-items: center;
+    height: 25px;
+    width: 25px;
+    background-color: red;
+    border-radius: 50%;
+    display: flex;
+    font-size: 12px;
+    justify-content: center;
+    padding: 5px;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+}
+
+.header--notificationList {
+    background-color: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    font-weight: 300;
+    padding: 10px;
+    position: absolute;
+    top: 50px;
+    right: 0;
+}
+
+.header--notification {
+    padding: 5px;
+    font-size: 14px;
+}
+
+.header--notificationRead {
+    margin-top: 10px;
+    padding: 5px;
+    width: 80%;
+}

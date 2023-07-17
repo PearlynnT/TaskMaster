@@ -1,6 +1,7 @@
 import React, { useState , useEffect} from 'react';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import useAuth from '../hooks/useAuth';
+import io from 'socket.io-client';
 import Header from '../components/Header';
 import Projects from '../components/Projects';
 import Tasks from '../components/Tasks';
@@ -11,13 +12,17 @@ import '../style/toggle.css';
 
 function Home() {
   const [toggleCount, setToggleCount] = useState(1);
+  const [socket, setSocket] = useState(null);
+  const { currUser, notification, setNotification, selectedRoom, setSelectedRoom } = useAuth();
 
   const handleProjectToggle = () => {
     setToggleCount(1);
+    setSelectedRoom("");
   };
 
   const handleTaskToggle = () => {
     setToggleCount(2);
+    setSelectedRoom("");
   };
 
   const handleChatToggle = () => {
@@ -26,17 +31,45 @@ function Home() {
 
   const handleStatsToggle = () => {
     setToggleCount(4);
+    setSelectedRoom("");
   };
 
   const [projects, setProjects] = useState([]);
   let user = '';
   const axiosPrivate = useAxiosPrivate();
-  const { currUser } = useAuth();
   const [flag, setFlag] = useState(false);
 
   const toggle = () => {
     setFlag(!flag);
   }
+
+  useEffect(() => {
+    //const newSocket = io.connect('https://task-master-evop.onrender.com');
+    const newSocket = io.connect('http://localhost:3500');
+    setSocket(newSocket);
+
+    //newSocket.emit("setup", currUser);
+
+    // Cleanup function to disconnect socket on component unmount
+    return () => {
+        newSocket.disconnect();
+    };
+  }, []);
+
+//   useEffect(() => {
+//     console.log(selectedRoom)
+//     if (socket) {
+//       socket.on("receive_notification", (data) => {
+//         // notifications when chat not selected
+//         if (selectedRoom === "" || selectedRoom !== data.room) {
+//             if (!notification.includes(data)) {
+//                 console.log("here")
+//                 setNotification([data, ...notification]);
+//             }
+//         }
+//       })
+//     }
+// }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -51,7 +84,7 @@ function Home() {
       return false;
     }
 
-    const getUser = async () => { // to edit
+    const getUser = async () => { 
         try {
           const { data } = await axiosPrivate.get(
               "/users",
@@ -106,17 +139,17 @@ function Home() {
     <div>
       <Header />
       <div className='toggle--container'>
-        <button className={`toggle--projects ${toggleCount == 1 ? 'toggled' : ''}`} onClick={handleProjectToggle}>Projects</button>
-        <button className={`toggle--tasks ${toggleCount == 2 ? 'toggled' : ''}`} onClick={handleTaskToggle}>Tasks</button>
-        <button className={`toggle--tasks ${toggleCount == 3 ? 'toggled' : ''}`} onClick={handleChatToggle}>Chats</button>
-        <button className={`toggle--tasks ${toggleCount == 4 ? 'toggled' : ''}`} onClick={handleStatsToggle}>Stats</button>
+        <button className={`toggle--projects ${toggleCount === 1 ? 'toggled' : ''}`} onClick={handleProjectToggle}>Projects</button>
+        <button className={`toggle--tasks ${toggleCount === 2 ? 'toggled' : ''}`} onClick={handleTaskToggle}>Tasks</button>
+        <button className={`toggle--tasks ${toggleCount === 3 ? 'toggled' : ''}`} onClick={handleChatToggle}>Chats</button>
+        <button className={`toggle--tasks ${toggleCount === 4 ? 'toggled' : ''}`} onClick={handleStatsToggle}>Stats</button>
       </div>
-      {toggleCount == 1 
-        ? <Projects projects={projects} toggle={toggle} /> 
-        : toggleCount == 2
-        ? <Tasks projects={projects} toggle={toggle} />
-        : toggleCount == 3 
-        ? <Chats projects={projects} />
+      {toggleCount === 1 
+        ? <Projects projects={projects} toggle={toggle} socket={socket} /> 
+        : toggleCount === 2
+        ? <Tasks projects={projects} toggle={toggle} socket={socket} />
+        : toggleCount === 3 
+        ? <Chats projects={projects} socket={socket} />
         : <Stats />}
     </div>
   );

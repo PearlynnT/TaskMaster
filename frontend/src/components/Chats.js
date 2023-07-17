@@ -4,41 +4,50 @@ import sendIcon from '../icon/sendMessage.png';
 import axios from '../api/axios';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import useAuth from '../hooks/useAuth';
-import io from 'socket.io-client';
+//import io from 'socket.io-client';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import Lottie from "lottie-react";
 import animationData from "../animations/typing.json";
+import uuid from 'react-uuid';
+
 
 const MESSAGE_URL = '/msg';
 
-function Chats({ projects }) {
+function Chats({ projects, socket }) {
     const axiosPrivate = useAxiosPrivate();
-    const { currUser } = useAuth();
+    const { currUser, notification, setNotification, selectedRoom, setSelectedRoom } = useAuth();
 
-    const [socket, setSocket] = useState(null);
+    const [sock, setSock] = useState(null);
     const [room, setRoom] = useState("");
     const [currentProject, setCurrentProject] = useState(null);
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
     const [projId, setProjId] = useState(null);
     const [send, setSend] = useState(null);
-    const [socketConnected, setSocketConnected] = useState(false);
+    //const [socketConnected, setSocketConnected] = useState(false);
     const [typing, setTyping] = useState(false);
     const [isTyping, setIsTyping] = useState(false);
 
+    // useEffect(() => {
+    //     //const newSocket = io.connect('https://task-master-evop.onrender.com');
+    //     const newSocket = io.connect('http://localhost:3500');
+    //     setSocket(newSocket);
+
+    //     newSocket.on("connected", () => setSocketConnected(true));
+    //     newSocket.on("typing", () => setIsTyping(true));
+    //     newSocket.on("stop typing", () => setIsTyping(false));
+
+    //     // Cleanup function to disconnect socket on component unmount
+    //     return () => {
+    //         newSocket.disconnect();
+    //     };
+    // }, []);
+
     useEffect(() => {
-        //const newSocket = io.connect('https://task-master-evop.onrender.com');
-        const newSocket = io.connect('http://localhost:3500');
-        setSocket(newSocket);
-
-        newSocket.on("connected", () => setSocketConnected(true));
-        newSocket.on("typing", () => setIsTyping(true));
-        newSocket.on("stop typing", () => setIsTyping(false));
-
-        // Cleanup function to disconnect socket on component unmount
-        return () => {
-            newSocket.disconnect();
-        };
+        setSock(socket);
+        //socket.on("connected", () => setSocketConnected(true));
+        socket.on("typing", () => setIsTyping(true));
+        socket.on("stop typing", () => setIsTyping(false));
     }, []);
 
     useEffect(() => {
@@ -68,11 +77,12 @@ function Chats({ projects }) {
             isMounted = false;
             controller.abort();
         };
-    }, [])
+    }, []);
 
     const joinRoom = (room) => {
         socket.emit("join_room", room);
         setRoom(room);
+        setSelectedRoom(room);
     }
 
     const selectProject = (proj) => {
@@ -137,23 +147,35 @@ function Chats({ projects }) {
             setProjId(null);
             setSend(null);
             socket.emit("send_message", messageData);
+            socket.emit("send_notification", messageData);
             setMessageList((list) => [...list, messageData]);
             setCurrentMessage("");
         }
     }
 
     useEffect(() => {
-        if (socket) {
+        if (sock) {
             socket.on("receive_message", (data) => {
                 setMessageList((list) => [...list, data]);
             });
-        }
-    }, [socket]);
+            // console.log("selected: " + selectedRoom)
+            // socket.on("receive_notification", (data) => {
+            //     console.log(data.room)
+            //     if (selectedRoom !== data.room) {
+            //         // notifications when chat not selected
+            //         if (!notification.includes(data)) {
+            //             setNotification([data, ...notification]);
+            //             console.log("notification: " + notification)
+            //         }
+            //     }
+            // });
+        } 
+    }, [sock]);
 
     const typingHandler = (e) => {
         setCurrentMessage(e.target.value);
 
-        if (!socketConnected) return;
+        //if (!socketConnected) return;
 
         if (!typing) {
             setTyping(true);
@@ -192,7 +214,10 @@ function Chats({ projects }) {
                 <div className="chats--body">
                     <ScrollToBottom className="chats--msg--container"> 
                         {messageList?.map(msg => (
-                            <div className={msg.owner === currUser ? 'chats--entry--left' : 'chats--entry--right'}>
+                            <div 
+                                key={uuid()}
+                                className={msg.owner === currUser ? 'chats--entry--right' : 'chats--entry--left'}
+                            >
                                 <div className="chats--name">{msg.owner}</div>
                                 <div className="chats--msg"> {msg.message}</div>
                                 <div className="chats--time">{msg.time}</div>

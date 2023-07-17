@@ -75,11 +75,16 @@ io.use
 // listen on the connection event for incoming sockets 
 io.on("connection", (socket) => {
     console.log("User connected", socket.id);
+    // socket.on("setup", (userData) => {
+    //     console.log(`${userData} connected`);
+    //     socket.join(userData);
+    //     socket.emit("connected");
+    // });
     socket.emit("connected");
 
     socket.on("join_room", (data) => {
         socket.join(data);
-        console.log(`User with ID: ${socket.id} joined room ${data}`)
+        console.log(`User with ID: ${socket.id} joined room ${data}`);
     });
 
     socket.on("typing", (room) => socket.in(room).emit("typing"));
@@ -88,6 +93,11 @@ io.on("connection", (socket) => {
     socket.on("send_message", (data) => {
         socket.to(data.room).emit("receive_message", data); // .to is to specify only users in same room can receive message 
     });
+
+    // notifications
+    socket.on("send_notification", (data) => {
+        socket.to(data.room).emit("receive_notification", data);
+    })
 
     socket.on("disconnect", () => {
         console.log("User disconnected", socket.id);

@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import useAuth from '../hooks/useAuth';
 
-function Stats() {
+function Stats({ socket }) {
     const axiosPrivate = useAxiosPrivate();
-    const { currUser } = useAuth();
+    const { currUser, notification, setNotification } = useAuth();
 
     //const [user, setUser] = useState(null);
     let user = '';
@@ -16,6 +16,16 @@ function Stats() {
     // let completedProjs = 0;
     // let activeTasks = 0;
     // let completedTasks = 0;
+
+    // useEffect(() => {
+    //     socket.on("receive_message", (data) => { 
+    //         // notifications when chat not selected
+    //         if (!notification.includes(data)) {
+    //           console.log("stats")
+    //           setNotification([data, ...notification]);
+    //         }
+    //     });
+    // }, []);
 
     useEffect(() => {
         let isMounted = true;
