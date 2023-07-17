@@ -9,6 +9,7 @@ import ProjectCreation from './pages/ProjectCreation';
 import TaskCreation from './pages/TaskCreation';
 import TasksByProject from './components/TasksByProject';
 import TaskUpdate from './pages/TaskUpdate';
+import AvatarSelection from './pages/AvatarSelection';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Home />} />
+            <Route path="avatarSelection" element={<AvatarSelection />} />
             <Route path="projectCreation" element={<ProjectCreation />} />
             <Route path="taskCreation/:id" element={<TaskCreation />} />
             <Route path="tasks/:id" element={<TasksByProject />} />
