@@ -11,6 +11,7 @@ import DeleteConfirmationModal from './DeleteConfirmationModal';
 function Task(props) {
     const axiosPrivate = useAxiosPrivate();
     const [userName, setUserName] = useState("");
+    const [avatar, setAvatar] = useState("");
 
     const [deleteToggle, setDeleteToggle] = useState(false);
 
@@ -45,8 +46,10 @@ function Task(props) {
                   }
               );
               const userName = data.username;
+              const icon = data.avatar;
               if (isMounted) {
-                setUserName(userName)
+                setUserName(userName);
+                setAvatar(icon);
               }
             } catch (err) {
               console.log(err);
@@ -79,7 +82,14 @@ function Task(props) {
             <div className="task--divider"></div>
             <div className='task--completed'>{props.completed ? <Completed /> : <NotCompleted />}</div>
             <div className="task--divider"></div>
-            <div className="task--assignTo">{userName}</div>
+            <div className="task--assignTo">
+                <img 
+                    src={`data:image/svg+xml;base64,${avatar}`}
+                    placeholder='icon'
+                    className='profile--icon'
+                />
+                {userName}
+            </div>
             <div className="task--divider"></div>
             <div className='task--actions'>
                 <Link to={`/taskUpdate/${props._id}`}>

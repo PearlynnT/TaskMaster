@@ -1,5 +1,10 @@
 .tbp--container {
     margin: 30px;
+    min-width: 1400px;
+}
+
+.scroll-wrapper {
+    overflow-x: scroll;
 }
 
 .tbp--name {

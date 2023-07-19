@@ -5,12 +5,14 @@ import useAuth from '../hooks/useAuth';
 import { Link } from "react-router-dom";
 import Select from "react-select";
 import '../style/projectCreation.css';
+import { useNavigate} from 'react-router-dom';
 
 const CREATE_PROJECT_URL = '/create';
 
 function ProjectCreation() {
     const axiosPrivate = useAxiosPrivate();
     const { currUser } = useAuth();
+    const navigate = useNavigate();
 
     const nameRef = useRef();
     const errRef = useRef();
@@ -141,10 +143,7 @@ function ProjectCreation() {
     return (
         <div className="projectCreation--container">
             { success ? (
-                <section className = "create--successful">
-                    <h1>Successfully created a new project!</h1>
-                    <Link to="/"><span className="create--link">Home</span></Link>
-                </section>
+                navigate("/", { replace: true })
             ) : (
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
