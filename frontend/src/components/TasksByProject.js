@@ -60,11 +60,13 @@ function TasksByProject(props) {
     </div>
 
     return (
-        <div className='tbp--container'>
-            <div className='tbp--name'>{props.name}</div>
-            {title}
-            {taskView}
-            <NewTask id={props._id}/>
+        <div className='scroll-wrapper'>
+            <div className='tbp--container'>
+                <div className='tbp--name'>{props.name}</div>
+                {title}
+                {taskView}
+                <NewTask id={props._id}/>
+            </div>
         </div>
     )
 }
