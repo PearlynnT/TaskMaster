@@ -127,9 +127,6 @@ function TaskCreation() {
 
     return (
         <div className='taskCreation--container'>
-            { success ? (
-                navigate("/", { replace: true })
-            ) : (
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1 className='blueHeader'>Add Task</h1>
@@ -183,7 +180,6 @@ function TaskCreation() {
                         <button type="submit" className='addTask'>Add Task</button>
                     </form>
                 </section>
-            )}
             <Link to="/"><span style={{color: '#6988F6', textDecoration: 'underline'}}>Home Page</span></Link>
         </div>
     )

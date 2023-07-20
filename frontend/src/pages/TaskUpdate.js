@@ -6,13 +6,14 @@ import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import '../style/taskUpdate.css';
+import { useNavigate} from 'react-router-dom';
 
 //const UPDATE_TASK_URL = '/update';
 
 function TaskUpdate() {
     const axiosPrivate = useAxiosPrivate();
     const { id } = useParams();
-
+    const navigate = useNavigate();
     const descRef = useRef();
     const errRef = useRef();
 
@@ -105,10 +106,7 @@ function TaskUpdate() {
     return (
         <div className="taskUpdate--container">
             { success ? (
-                <section>
-                    <h1>Successfully updated the task!</h1>
-                    <Link to="/"><span style={{color: '#6988F6', textDecoration: 'underline'}}>Home</span></Link>
-                </section>
+                navigate("/", { replace: true })
             ) : (
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
