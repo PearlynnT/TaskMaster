@@ -114,7 +114,7 @@ function Home() {
       {toggleCount == 1 
         ? <Projects projects={projects} toggle={toggle} /> 
         : toggleCount == 2
-        ? <Tasks projects={projects} toggle={toggle} />
+        ? <Tasks projects={projects}/>
         : toggleCount == 3 
         ? <Chats projects={projects} />
         : <Stats />}

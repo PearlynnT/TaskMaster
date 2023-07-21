@@ -12,7 +12,6 @@ function Tasks(props) {
                     {<TasksByProject 
                       name = {project.name}
                       _id = {project._id}
-                      toggle = {props.toggle}
                       />}
                   </div>
                 ))}
