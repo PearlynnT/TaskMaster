@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Logout from "./Logout"
 import '../style/header.css';
 import Profile from "./Profile";
 import bellIcon from "../icon/bell.png"; 
 import Notification from './Notification';
 
-function Header() {
-    const [toggle, setToggle] = useState(false);
+function Header( {toggle} ) {
+    const [dropDown, setDropDown] = useState(false);
 
     const handleBellClick = () => {
-        setToggle(!toggle);
+        setDropDown(!dropDown);
     }
 
     return (
@@ -23,7 +23,7 @@ function Header() {
                 onClick={handleBellClick}
             />
             <Logout className="header--logout"/>
-            {toggle && <Notification />}
+            {dropDown && <Notification dropDown={dropDown} toggle={toggle}/>}
         </div>
     )
 }
