@@ -35,6 +35,7 @@ app.use('/logout', require('./routes/logout'));
 app.use('/create', require('./routes/project')); // may not need this, if deleted, need to change fe url
 app.use('/add', require('./routes/task'));
 app.use('/msg', require('./routes/message'));
+app.use('/notif', require('./routes/notifications')); // new 
 
 app.use(verifyJWT);
 app.use('/users', require('./routes/api/users'));
@@ -42,6 +43,7 @@ app.use('/projects', require('./routes/api/projects'));
 app.use('/tasks', require('./routes/api/tasks'));
 //app.use('/chats', require('./routes/api/chats'));
 app.use('/messages', require('./routes/api/messages'));
+app.use('/notifications', require('./routes/api/notifications'));
 
 app.all('*', (req, res) => {
     res.status(404);
