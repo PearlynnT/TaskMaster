@@ -19,6 +19,7 @@ const createNewProject = async (req, res) => {
         return res.status(400).json({ 'message': 'All fields are required' });
     }
     try {
+        console.log(req.body)
         const result = await Project.create({
             owner: new mongoose.Types.ObjectId(req.body.own), // req.owner.id 
             members: req.body.memb.map(x => new mongoose.Types.ObjectId(x)), 
@@ -32,6 +33,7 @@ const createNewProject = async (req, res) => {
 }
 
 const updateProject = async (req, res) => {
+    console.log(req.body)
     const updates = Object.keys(req.body);
     const allowedUpdates = ["description", "completed"];
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
@@ -82,10 +84,41 @@ const getProject = async (req, res) => {
     }
 }
 
+const addMemberToProject = async (req, res) => {
+    try {
+        if (!req?.body?.id) {
+            return res.status(400).json({ 'message': 'Project ID required.' });
+        }
+        const project = await Project.findOne({ _id: req.body.id }).exec();
+        if (!project) {
+            return res.status(204).json({ "message": `No project matches ID ${req.body.id}.` });
+        }
+
+        if (!req?.body?.newMemberId) {
+            return res.status(400).json({ 'message': 'New member ID required.' });
+        }
+
+        const newMemberId = new mongoose.Types.ObjectId(req.body.newMemberId);
+
+        if (project.members.includes(newMemberId)) {
+            return res.status(400).json({ 'message': 'Member already exists in the project.' });
+        }
+
+        project.members.push(newMemberId);
+        const result = await project.save();
+        res.json(result);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ 'message': 'Internal Server Error' });
+    }
+}
+
+
 module.exports = {
     getAllProjects,
     createNewProject,
     updateProject,
     deleteProject,
-    getProject
+    getProject,
+    addMemberToProject
 }

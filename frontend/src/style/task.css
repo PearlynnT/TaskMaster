@@ -39,6 +39,9 @@
 
 .task--assignTo {
     width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start
 }
 
 .task--actions {
@@ -60,7 +63,8 @@
     justify-content: space-evenly;
 }
 
-.task--delete {
+.task--delete,
+.task--edit {
     width: 25px;
 }
 
@@ -73,6 +77,19 @@
     margin: 0;
 }
 
-.task--button:hover {
+.task--button:hover, 
+.task--edit:hover {
     background-color: #D7D5D5;
 }
+
+.task--edit {
+    margin-top: 5px;
+}
+
+.task--container {
+    min-width: 1400px;
+    overflow-x: scroll;
+}
+
+
+

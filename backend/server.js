@@ -32,13 +32,18 @@ app.use('/register', require('./routes/register'));
 app.use('/login', require('./routes/login'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
-app.use('/create', require('./routes/project'));
+app.use('/create', require('./routes/project')); // may not need this, if deleted, need to change fe url
 app.use('/add', require('./routes/task'));
+app.use('/msg', require('./routes/message'));
+app.use('/notif', require('./routes/notifications')); // new 
 
 app.use(verifyJWT);
 app.use('/users', require('./routes/api/users'));
-app.use('/projects', require('./routes/api/projects'))
-app.use('/tasks', require('./routes/api/tasks'))
+app.use('/projects', require('./routes/api/projects'));
+app.use('/tasks', require('./routes/api/tasks'));
+//app.use('/chats', require('./routes/api/chats'));
+app.use('/messages', require('./routes/api/messages'));
+app.use('/notifications', require('./routes/api/notifications'));
 
 app.all('*', (req, res) => {
     res.status(404);
@@ -53,7 +58,45 @@ app.all('*', (req, res) => {
 
 app.use(errorHandler);
 
+// socket.io for chat 
+const http = require("http");
+const { Server } = require("socket.io");
+
+const server = http.createServer(app);
+
+const io = new Server(server, {
+    cors: {
+        //origin: "https://task-master-app-vut5.onrender.com",
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"]
+    }
+});
+
+io.use
+
+// listen on the connection event for incoming sockets 
+io.on("connection", (socket) => {
+    console.log("User connected", socket.id);
+    socket.emit("connected");
+
+    socket.on("join_room", (data) => {
+        socket.join(data);
+        console.log(`User with ID: ${socket.id} joined room ${data}`)
+    });
+
+    socket.on("typing", (room) => socket.in(room).emit("typing"));
+    socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
+
+    socket.on("send_message", (data) => {
+        socket.to(data.room).emit("receive_message", data); // .to is to specify only users in same room can receive message 
+    });
+
+    socket.on("disconnect", () => {
+        console.log("User disconnected", socket.id);
+    });
+})
+
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });

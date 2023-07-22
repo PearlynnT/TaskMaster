@@ -7,6 +7,7 @@ router.route('/')
     .delete(usersController.deleteUser);
 
 router.route('/:id')
-    .get(usersController.getUser);
+    .get(usersController.getUser)
+    .put(usersController.updateAvatar);
 
 module.exports = router;

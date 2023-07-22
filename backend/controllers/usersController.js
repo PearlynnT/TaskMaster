@@ -6,7 +6,7 @@ const getAllUsers = async (req, res) => {
         return res.status(204).json({ 'message': 'No users found' });
     }
     res.json(users);
-}
+};
 
 const deleteUser = async (req, res) => {
     if (!req?.body?.id) {
@@ -18,7 +18,7 @@ const deleteUser = async (req, res) => {
     }
     const result = await user.deleteOne({ _id: req.body.id });
     res.json(result);
-}
+};
 
 const getUser = async (req, res) => {
     if (!req?.params?.id) {
@@ -29,10 +29,27 @@ const getUser = async (req, res) => {
         return res.status(204).json({ 'message': `User ID ${req.params.id} not found` });
     }
     res.json(user);
-}
+};
+
+const updateAvatar = async (req, res) => {
+    if (!req?.params?.id) {
+        return res.status(400).json({ "message": 'User ID required' });
+    }
+    const { avatar } = req.body;
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id, { avatar }, { new: true });
+        if (!user) {
+            return res.status(204).json({ 'message': `User ID ${id} not found` });
+        }
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ "message": "Error updating avatar", "error": error.message });
+    }
+};
 
 module.exports = {
     getAllUsers,
     deleteUser,
-    getUser
-}
+    getUser,
+    updateAvatar
+};

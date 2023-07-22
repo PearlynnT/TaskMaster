@@ -18,7 +18,7 @@ function Projects(props) {
               <div key={i}>
                 {<Project 
                   {...project}
-                  toggle = {toggle}
+                  toggle={toggle}
                   />}
               </div>
             ))}
