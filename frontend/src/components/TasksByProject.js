@@ -8,6 +8,7 @@ import '../style/task.css';
 function TasksByProject(props) {
     const [tasks, setTasks] = useState([]);
     const axiosPrivate = useAxiosPrivate();
+    const [flag, setFlag] = useState(false);
 
     useEffect(() => {
         let isMounted = true;
@@ -36,14 +37,14 @@ function TasksByProject(props) {
             isMounted = false;
             controller.abort();
         };
-    }, [])
+    }, [flag])
 
     const taskView = <div>
         {tasks.map((task, i) => (
         <div key={i}>
           {<Task 
             {...task}
-            toggle={props.toggle}
+            toggle = {setFlag}
             />}
         </div>
       ))}
@@ -60,11 +61,13 @@ function TasksByProject(props) {
     </div>
 
     return (
-        <div className='tbp--container'>
-            <div className='tbp--name'>{props.name}</div>
-            {title}
-            {taskView}
-            <NewTask id={props._id}/>
+        <div className='scroll-wrapper'>
+            <div className='tbp--container'>
+                <div className='tbp--name'>{props.name}</div>
+                {title}
+                {taskView}
+                <NewTask id={props._id}/>
+            </div>
         </div>
     )
 }

@@ -96,15 +96,20 @@ function Home() {
 
     getUser().then(() => getProjects());
 
+    const interval = setInterval(() => {
+        getProjects();
+    }, 5000);
+
     return () => {
       isMounted = false;
       controller.abort();
+      clearInterval(interval);
     };
   }, [flag]);
   
   return (
     <div>
-      <Header />
+      <Header toggle={toggle}/>
       <div className='toggle--container'>
         <button className={`toggle--projects ${toggleCount == 1 ? 'toggled' : ''}`} onClick={handleProjectToggle}>Projects</button>
         <button className={`toggle--tasks ${toggleCount == 2 ? 'toggled' : ''}`} onClick={handleTaskToggle}>Tasks</button>
@@ -114,7 +119,7 @@ function Home() {
       {toggleCount == 1 
         ? <Projects projects={projects} toggle={toggle} /> 
         : toggleCount == 2
-        ? <Tasks projects={projects} toggle={toggle} />
+        ? <Tasks projects={projects}/>
         : toggleCount == 3 
         ? <Chats projects={projects} />
         : <Stats />}

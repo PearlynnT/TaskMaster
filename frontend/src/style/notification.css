@@ -1,0 +1,9 @@
+.notification--container {
+    position: absolute;
+    top: 60px;
+    right: 30px;    
+    background-color: white;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+}

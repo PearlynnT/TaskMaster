@@ -8,6 +8,7 @@ import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import '../style/taskCreation.css';
+import { useNavigate} from 'react-router-dom';
 
 const ADD_TASK_URL = '/add';
 
@@ -15,6 +16,7 @@ function TaskCreation() {
     const axiosPrivate = useAxiosPrivate();
     //const { currUser } = useAuth();
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const nameRef = useRef();
     const errRef = useRef();
@@ -125,12 +127,6 @@ function TaskCreation() {
 
     return (
         <div className='taskCreation--container'>
-            { success ? (
-                <section>
-                    <h1>Successfully added a new task!</h1>
-                    <Link to="/"><span style={{color: '#6988F6', textDecoration: 'underline'}}>Home</span></Link>
-                </section>
-            ) : (
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1 className='blueHeader'>Add Task</h1>
@@ -184,7 +180,6 @@ function TaskCreation() {
                         <button type="submit" className='addTask'>Add Task</button>
                     </form>
                 </section>
-            )}
             <Link to="/"><span style={{color: '#6988F6', textDecoration: 'underline'}}>Home Page</span></Link>
         </div>
     )

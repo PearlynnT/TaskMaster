@@ -5,12 +5,14 @@ import useAuth from '../hooks/useAuth';
 import { Link } from "react-router-dom";
 import Select from "react-select";
 import '../style/projectCreation.css';
+import { useNavigate} from 'react-router-dom';
 
 const CREATE_PROJECT_URL = '/create';
 
 function ProjectCreation() {
     const axiosPrivate = useAxiosPrivate();
     const { currUser } = useAuth();
+    const navigate = useNavigate();
 
     const nameRef = useRef();
     const errRef = useRef();
@@ -18,7 +20,6 @@ function ProjectCreation() {
     const [own, setOwn] = useState(null);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    //const [memb, setMemb] = useState([]);
     const memb = [];
     const [completed, setCompleted] = useState(false);
 
@@ -96,17 +97,11 @@ function ProjectCreation() {
         };
     }, [])
 
+    // senderName, receipientId, projectName, projectId 
+    // currUser, memb[index], name, (???)
+
     const handleSubmit = async event => {
         event.preventDefault();
-
-        //const arr = [];
-        for (let i = 0; i < selectedOptions?.length; i++) {
-            let { data } = await axiosPrivate.get(`/users/${selectedOptions[i].value}`);
-            //arr.push(data._id);
-            memb.push(data._id);
-        }
-        //setMemb(arr);
-
         try {
             const response = await axios.post(CREATE_PROJECT_URL,
                 JSON.stringify({ own, name, description, memb, completed }),
@@ -114,18 +109,24 @@ function ProjectCreation() {
                     headers: { 'Content-Type': 'application/json' }
                 }
             );
-            // create new chat when a new project is created
-            // const res = await axios.post('/chats',
-            //     JSON.stringify({ own, memb }),
-            //     {
-            //         headers: { 'Content-Type': 'application/json' }
-            //     }
-            // );
+            for (let i = 0; i < selectedOptions?.length; i++) {
+                let { data } = await axiosPrivate.get(`/users/${selectedOptions[i].value}`);
+                const senderName = currUser;
+                const receipientId = data._id;
+                const projectName = name;
+                const projectId = response.data._id;
+                
+                await axios.post('/notif',
+                    JSON.stringify({ senderName, receipientId, projectName, projectId  }),
+                    {
+                        headers: { 'Content-Type': 'application/json' }
+                    }
+                );
+            }
             setSuccess(true);
             setOwn(null);
             setName('');
             setDescription('');
-            //setMemb([]);
             setCompleted(false);
             setSelectedOptions(null);
         } catch (err) {
@@ -141,10 +142,7 @@ function ProjectCreation() {
     return (
         <div className="projectCreation--container">
             { success ? (
-                <section className = "create--successful">
-                    <h1>Successfully created a new project!</h1>
-                    <Link to="/"><span className="create--link">Home</span></Link>
-                </section>
+                navigate("/", { replace: true })
             ) : (
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
