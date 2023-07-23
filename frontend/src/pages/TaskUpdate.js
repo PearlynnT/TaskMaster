@@ -1,28 +1,32 @@
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import axios from '../api/axios';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { Link, useParams } from "react-router-dom";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import '../style/taskUpdate.css';
-import { useNavigate} from 'react-router-dom';
+import '../style/taskCreation.css';
+import { useNavigate } from 'react-router-dom';
 
-//const UPDATE_TASK_URL = '/update';
+const UPDATE_TASK_URL = '/update'; 
 
 function TaskUpdate() {
     const axiosPrivate = useAxiosPrivate();
     const { id } = useParams();
     const navigate = useNavigate();
-    const descRef = useRef();
+
+    const nameRef = useRef();
     const errRef = useRef();
 
+    const [proj, setProj] = useState(id);
+    const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [priority, setPriority] = useState('');
     const [priorityLvl, setPriorityLvl] = useState('');
+    const [assign, setAssign] = useState(null);
     const [date, setDate] = useState(null);
-    //let priority = '';
+    const [status, setStatus] = useState(false);
 
+    const [userOptions, setUserOptions] = useState([]);
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
@@ -32,39 +36,99 @@ function TaskUpdate() {
         { value: "Low", label: "Low" }
     ];
 
+    const [completedOptions, setCompletedOptions] = useState([
+        { value: true, label: "Completed" },
+        { value: false, label: "Not Completed" }
+    ]);
+
     useEffect(() => {
-        descRef.current.focus();
+        nameRef.current.focus();
     }, [])
 
     useEffect(() => {
         setErrMsg('');
-    }, [description])
+    }, [name, description])
 
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
+        let arr = [];
 
-        const getTask = async () => {
+        const getOption = async (userData, i) => {
             try {
-                const { data } = await axiosPrivate.get(
-                    "/tasks",
-                    {
-                      signal: controller.signal,
-                    }
-                );
-                const task = data.filter((item) => (item._id === id));
+                let { data } = await axiosPrivate.get(`/users/${userData[i]}`);
+                arr.push({ value: data._id, label: data.username });
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        const getOptions = async (userData) => {
+            try {
+                let requests = [];
+                for (let i = 0; i < userData.length; i++) {
+                    requests.push(getOption(userData, i));
+                }
+                await Promise.all(requests);
                 if (isMounted) {
-                    setDescription(task[0].description); 
-                    setPriority(task[0].priority);
-                    //priority = task[0].priority; 
-                    setDate(new Date(task[0].date));
+                    setUserOptions(arr); 
                 }
             } catch (err) {
                 console.log(err);
             }
         }
 
-        getTask();
+        const getUsers = async () => {
+            try {
+                const { data } = await axiosPrivate.get(
+                    "/projects",
+                    {
+                      signal: controller.signal,
+                    }
+                );
+                const project = data;
+                if (isMounted) {
+                    let arr = project[0].members;
+                    arr.push(project[0].owner);
+                    getOptions(arr);
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        const getTaskData = async () => {
+            try {
+                const { data } = await axiosPrivate.get(
+                    `/tasks/${id}`,
+                    {
+                        signal: controller.signal,
+                    }
+                );
+                if (isMounted) {
+                    console.log(`User Options: ${userOptions}`);
+                    console.log(data.assignTo);
+                    console.log(userOptions.find(option => option.value == data.assignTo));
+
+                    setName(data.name);
+                    setDescription(data.description);
+                    setPriorityLvl(priorityOptions.find(option => option.value === data.priority));
+                    setAssign(userOptions.find(option => option.value == data.assignTo));
+                    setDate(new Date(data.date));
+                    setStatus(completedOptions.find(option => option.value === data.completed));
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        const fetchData = async () => {
+            await getUsers();
+            await getTaskData();
+        };
+    
+        fetchData();
+    
 
         return () => {
             isMounted = false;
@@ -72,27 +136,19 @@ function TaskUpdate() {
         };
     }, [])
 
-    const handleSubmit = async event => {
+    const handleUpdate = async event => {
         event.preventDefault();
-
-        if (priorityLvl.value !== undefined) {
-            setPriority(priorityLvl.value); 
-        }
-        console.log(description)
-        console.log(priority)
-        console.log(date)
+        let priority = priorityLvl?.value;
+        let assignTo = assign?.value;
+        let completed = status?.value;
         try {
             const response = await axiosPrivate.put(`/tasks/${id}`,
-                JSON.stringify({ description, priority, date }),
+                JSON.stringify({ proj, name, description, priority, assignTo, date, completed}),
                 {
                     headers: { 'Content-Type': 'application/json' }
                 }
             );
             setSuccess(true);
-            setDescription('');
-            setPriority('');
-            setPriorityLvl('');
-            setDate(null);
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -104,42 +160,74 @@ function TaskUpdate() {
     }
 
     return (
-        <div className="taskUpdate--container">
-            { success ? (
+        <div className='taskCreation--container'>
+            {success ? (
                 navigate("/", { replace: true })
             ) : (
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1 className='blueHeader'>Update Task</h1>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleUpdate}>
+                        <label htmlFor="name">Task Name:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            ref={nameRef}
+                            autoComplete="off"
+                            onChange={(e) => setName(e.target.value)}
+                            value={name}
+                            required
+                        />
                         <label htmlFor="description">Task Description:</label>
-                        <input 
+                        <input
                             type="text"
                             id="description"
-                            ref={descRef}
                             autoComplete="off"
                             onChange={(e) => setDescription(e.target.value)}
                             value={description}
+                            required
                         />
-                        <Select 
+                        <Select
                             options={priorityOptions}
                             name="priority"
+                            value={priorityLvl}
                             onChange={setPriorityLvl}
                             autoFocus={true}
-                            placeholder= 'Priority'
+                            placeholder='Priority'
+                            required
+                        />
+                        <Select
+                            options={userOptions}
+                            name="assignTo"
+                            value={assign}
+                            onChange={setAssign}
+                            autoFocus={true}
+                            placeholder='Assign members'
+                            required
+                        />
+                        <Select
+                            options={completedOptions}
+                            name="completed"
+                            value={status}
+                            onChange={setStatus}
+                            autoFocus={true}
+                            placeholder='Completed Status'
+                            required
                         />
                         <label htmlFor="date">Completed By:</label>
-                        <DatePicker 
+                        <DatePicker
                             showIcon
                             selected={date}
                             onChange={setDate}
                             dateFormat='dd/MM/yyyy'
                             minDate={new Date()}
+                            required
                         />
-                        <button type="submit" className='updateTask'>Update Task</button>
+                        <button type="submit" className='addTask'>Update Task</button>
                     </form>
                 </section>
             )}
+            <Link to="/"><span style={{ color: '#6988F6', textDecoration: 'underline' }}>Home Page</span></Link>
         </div>
     )
 }

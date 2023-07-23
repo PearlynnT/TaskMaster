@@ -1,33 +1,6 @@
 const Task = require('../model/Task');
 const mongoose = require('mongoose');
 
-// const getAllTasksByProj = async (req, res) => {
-//     try {
-//         const tasks = await Task.find({ project: req.body.project }); // todo: get all tasks based on projectid
-//         if (!tasks) {
-//             return res.status(204).json({ 'message': 'No tasks found.' });
-//         }
-//         res.json(tasks);
-//     } catch (err) {
-//         console.error(err);
-//         return res.status(500).json({ 'message': 'Internal Server Error' });
-//     }
-// }
-
-// // todo: get all tasks based on userid
-// const getAllTasksByUser = async (req, res) => {
-//     try {
-//         const tasks = await Task.find({ assignTo: req.body.user });
-//         if (!tasks) {
-//             return res.status(204).json({ 'message': 'No tasks found.' });
-//         }
-//         res.json(tasks);
-//     } catch (err) {
-//         console.error(err);
-//         return res.status(500).json({ 'message': 'Internal Server Error' });
-//     }
-// }
-
 const getAllTasks = async (req, res) => {
     try {
         const tasks = await Task.find({}); 
@@ -60,22 +33,23 @@ const createNewTask = async (req, res) => {
 }
 
 const updateTask = async (req, res) => {
-    console.log(req.body)
+    //const allowedUpdates = ["proj", "name", "description", "priority", "assigned", "date", "completed"];
     const updates = Object.keys(req.body);
-    const allowedUpdates = ["description", "priority", "date", "completed"];
-    const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
-    if (!isValidOperation) {
-        return res.status(400).json({ 'message': 'Invalid operation' });
-    }
+    //const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
+    //if (!isValidOperation) {
+    //    return res.status(400).json({ 'message': 'Invalid operation' });
+    //}
+
     try {
-        // if (!req?.body?.id) {
-        //     return res.status(400).json({ 'message': 'Task ID required.' });
-        // }
-        const task = await Task.findOne({ _id: req.params.id }).exec();
+        const taskId = req.params.id;
+        const task = await Task.findById(taskId).exec();
+
         if (!task) {
-            return res.status(204).json({ "message": `No task matches ID ${req.params.id}.` });
+            return res.status(204).json({ "message": `No task matches ID ${taskId}.` });
         }
+
         updates.forEach((update) => (task[update] = req.body[update]));
+
         const result = await task.save();
         res.json(result);
     } catch (err) {
@@ -97,12 +71,10 @@ const deleteTask = async (req, res) => {
 
 const getTask = async (req, res) => {
     try {
-        if (!req?.body?.id) {
-            return res.status(400).json({ 'message': 'Task ID required.' });
-        }
-        const task = await Task.findOne({ _id: req.body.id }).exec();
+        const id = req.params.id;
+        const task = await Task.findOne({ _id: id }).exec();
         if (!task) {
-            return res.status(204).json({ "message": `No task matches ID ${req.body.id}.` });
+            return res.status(204).json({ "message": `No task matches ID ${id}.` });
         }
         res.json(task);
     } catch (err) {
@@ -112,8 +84,6 @@ const getTask = async (req, res) => {
 }
 
 module.exports = {
-    // getAllTasksByProj,
-    // getAllTasksByUser,
     getAllTasks,
     createNewTask,
     updateTask,

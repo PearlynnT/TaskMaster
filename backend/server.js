@@ -34,6 +34,7 @@ app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 app.use('/create', require('./routes/project')); // may not need this, if deleted, need to change fe url
 app.use('/add', require('./routes/task'));
+app.use('/update', require('./routes/taskUpdate'));
 app.use('/msg', require('./routes/message'));
 app.use('/notif', require('./routes/notifications')); // new 
 

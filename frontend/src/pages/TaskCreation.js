@@ -30,7 +30,6 @@ function TaskCreation() {
     const [completed, setCompleted] = useState(false);
 
     const [userOptions, setUserOptions] = useState([]);
-    //const [userData, setUserData] = useState([]);
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
