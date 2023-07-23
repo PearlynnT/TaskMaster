@@ -27,8 +27,8 @@ function Chats({ projects }) {
     const [isTyping, setIsTyping] = useState(false);
 
     useEffect(() => {
-        //const newSocket = io.connect('https://task-master-evop.onrender.com');
-        const newSocket = io.connect('http://localhost:3500');
+        const newSocket = io.connect('https://task-master-evop.onrender.com');
+        //const newSocket = io.connect('http://localhost:3500');
         setSocket(newSocket);
 
         newSocket.on("connected", () => setSocketConnected(true));
