@@ -12,13 +12,14 @@ const UPDATE_TASK_URL = '/update';
 
 function TaskUpdate() {
     const axiosPrivate = useAxiosPrivate();
+    // this id is task id 
     const { id } = useParams();
     const navigate = useNavigate();
 
     const nameRef = useRef();
     const errRef = useRef();
 
-    const [proj, setProj] = useState(id);
+    const [proj, setProj] = useState('');
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [priorityLvl, setPriorityLvl] = useState('');
@@ -52,27 +53,27 @@ function TaskUpdate() {
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
-        let arr = [];
 
-        const getOption = async (userData, i) => {
+        const getProjectId = async () => {
             try {
-                let { data } = await axiosPrivate.get(`/users/${userData[i]}`);
-                arr.push({ value: data._id, label: data.username });
+                let { data } = await axiosPrivate.get(`/tasks`);
+                const p = data.filter((item) => (item._id === id))
+                if (isMounted) {
+                    setProj(p[0].project);
+                }
             } catch (err) {
                 console.log(err);
             }
         }
 
-        const getOptions = async (userData) => {
+        const getOptions = async userData => {
             try {
-                let requests = [];
+                let arr = [];
                 for (let i = 0; i < userData.length; i++) {
-                    requests.push(getOption(userData, i));
+                    let { data } = await axiosPrivate.get(`/users/${userData[i]}`);
+                    arr.push({ value: data._id, label: data.username });
                 }
-                await Promise.all(requests);
-                if (isMounted) {
-                    setUserOptions(arr); 
-                }
+                setUserOptions(arr); 
             } catch (err) {
                 console.log(err);
             }
@@ -86,7 +87,8 @@ function TaskUpdate() {
                       signal: controller.signal,
                     }
                 );
-                const project = data;
+                // data is all the projects 
+                const project = data.filter((item) => (item._id === proj));
                 if (isMounted) {
                     let arr = project[0].members;
                     arr.push(project[0].owner);
@@ -106,10 +108,6 @@ function TaskUpdate() {
                     }
                 );
                 if (isMounted) {
-                    console.log(`User Options: ${userOptions}`);
-                    console.log(data.assignTo);
-                    console.log(userOptions.find(option => option.value == data.assignTo));
-
                     setName(data.name);
                     setDescription(data.description);
                     setPriorityLvl(priorityOptions.find(option => option.value === data.priority));
@@ -123,6 +121,7 @@ function TaskUpdate() {
         }
 
         const fetchData = async () => {
+            await getProjectId();
             await getUsers();
             await getTaskData();
         };
@@ -134,7 +133,7 @@ function TaskUpdate() {
             isMounted = false;
             controller.abort();
         };
-    }, [])
+    }, [proj])
 
     const handleUpdate = async event => {
         event.preventDefault();
