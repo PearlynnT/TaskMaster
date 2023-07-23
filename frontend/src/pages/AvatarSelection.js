@@ -120,7 +120,7 @@ function AvatarSelection() {
                 />
                 : (
                     <div>
-                        <div>
+                        <div className='avatars'>
                             {avatars.map((avatar, index) => {
                             return (
                                     <img
@@ -140,6 +140,8 @@ function AvatarSelection() {
                     )
                 }
             </div>
+            <div></div>
+            <div></div>
             <div className="avatar--buttons">
                 <button onClick={refresh} className="avatar--refresh">Refresh</button>
                 <button onClick={confirm} className="avatar--confirm">Confirm</button>

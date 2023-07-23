@@ -43,17 +43,25 @@
 /* Mobile styles */
 @media (max-width: 700px) {
     .avatar--header {
-        font-size: 20px;
-        margin: 20px;
+        font-size: 30px;
     }
     
     .avatar--container {
-        height: auto;
-        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+        height: 100vh;;
     }
     
+    .avatars {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 10px; 
+    }
+    
+
     .avatar--image {
-        width: 50px;
         margin: 5px;
     }
     
