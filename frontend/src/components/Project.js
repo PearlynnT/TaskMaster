@@ -72,23 +72,20 @@ function Project(props) {
     }
 
     return (
-        <div>
-            <div className="project">
-                <div className="project--header">
-                    <h3 className='project--name'>{props.name}</h3>
-                    <h4 className='project--member'>{props.members.length + 1 === 1 ? '1 member' : props.members.length + 1 + ' members'}</h4>
-                    <div className='project--actions'>
-                        <button className='project--button' onClick={handleDelete}>
-                            <img className='project--delete' src={deleteIcon} alt='Delete Button' />
-                        </button>
-                    </div>
+        <div className="project">
+            <div className="project--header">
+                <h3 className='project--name'>{props.name}</h3>
+                <h4 className='project--member'>{props.members.length + 1 === 1 ? '1 member' : props.members.length + 1 + ' members'}</h4>
+                <div className='project--actions'>
+                    <button className='project--button' onClick={handleDelete}>
+                        <img className='project--delete' src={deleteIcon} alt='Delete Button' />
+                    </button>
                 </div>
-                <div className='divider'></div>
-                <p className='project--description'>{props.description}</p>
             </div>
             <DeleteConfirmationModal isOpen={deleteToggle} onCancel={onCancel} onConfirm={() => onConfirm(props._id)} />
+            <div className='divider'></div>
+            <p className='project--description'>{props.description}</p>
         </div>
-        
     )
 }
 

@@ -7,3 +7,19 @@
     padding: 10px;
     border-radius: 10px;
 }
+
+.notification--accept,
+.notification--decline {
+    background-color: #6988F6;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.notif {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}

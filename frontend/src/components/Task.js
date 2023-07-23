@@ -6,7 +6,7 @@ import editIcon from '../icon/edit.png';
 import { Completed, NotCompleted } from './Status';
 import Priority from './Priority';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import DeleteConfirmationModal from './DeleteConfirmationModal';
+import DcmTask from './DcmTask';
 
 function Task(props) {
     const axiosPrivate = useAxiosPrivate();
@@ -71,34 +71,37 @@ function Task(props) {
     const formattedDate = date.toLocaleString(undefined, options);
 
     return (
-        <div className='task'>
-            <div className="task--name">{props.name}</div>
-            <div className="task--divider"></div>
-            <div className="task--description">{props.description}</div>
-            <div className="task--divider"></div>
-            <div className='task--priority'><Priority priority={props.priority} /></div>
-            <div className="task--divider"></div>
-            <div className='task--date'>{formattedDate}</div>
-            <div className="task--divider"></div>
-            <div className='task--completed'>{props.completed ? <Completed /> : <NotCompleted />}</div>
-            <div className="task--divider"></div>
-            <div className="task--assignTo">
-                <img 
-                    src={`data:image/svg+xml;base64,${avatar}`}
-                    placeholder='icon'
-                    className='profile--icon'
-                />
-                {userName}
+        <div>
+            <div className='task'>
+                <div className="task--name">{props.name}</div>
+                <div className="task--divider"></div>
+                <div className="task--description">{props.description}</div>
+                <div className="task--divider"></div>
+                <div className='task--priority'><Priority priority={props.priority} /></div>
+                <div className="task--divider"></div>
+                <div className='task--date'>{formattedDate}</div>
+                <div className="task--divider"></div>
+                <div className='task--completed'>{props.completed ? <Completed /> : <NotCompleted />}</div>
+                <div className="task--divider"></div>
+                <div className="task--assignTo">
+                    <img 
+                        src={`data:image/svg+xml;base64,${avatar}`}
+                        placeholder='icon'
+                        className='profile--icon'
+                    />
+                    {userName}
+                </div>
+                <div className="task--divider"></div>
+                <div className='task--actions'>
+                    <Link to={`/taskUpdate/${props._id}`}>
+                        <img src = {editIcon} className = 'task--edit'/>
+                    </Link>
+                    <button className='task--button' onClick={handleDelete}><img className='task--delete' src={deleteIcon} alt='Delete Button' /></button>
+                </div>
             </div>
-            <div className="task--divider"></div>
-            <div className='task--actions'>
-                <Link to={`/taskUpdate/${props._id}`}>
-                    <img src = {editIcon} className = 'task--edit'/>
-                </Link>
-                <button className='task--button' onClick={handleDelete}><img className='task--delete' src={deleteIcon} alt='Delete Button' /></button>
-            </div>
-            <DeleteConfirmationModal isOpen={deleteToggle} onCancel={onCancel} onConfirm={() => onConfirm(props._id)} />
+            <DcmTask isOpen={deleteToggle} onCancel={onCancel} onConfirm={() => onConfirm(props._id)} />
         </div>
+        
     );
 }
 

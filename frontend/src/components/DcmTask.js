@@ -1,9 +1,9 @@
 import React from 'react';
-import '../style/deleteConfirmationModal.css';
+import '../style/dcmTask.css';
 
-function DeleteConfirmationModal({isOpen, onCancel, onConfirm}) {
+function DcmTask({isOpen, onCancel, onConfirm}) {
     return (
-        <div className={`${isOpen ? 'modal--open' : 'modal--close'}`}>
+        <div className={`${isOpen ? 'modal--open--task' : 'modal--close'}`}>
             <p>Are you sure you want to delete this item ?</p>
             <div className="modal--actions">
                 <button className="modal--cancel" onClick={onCancel} >Cancel</button>
@@ -13,4 +13,4 @@ function DeleteConfirmationModal({isOpen, onCancel, onConfirm}) {
     )
 }
 
-export default DeleteConfirmationModal;
+export default DcmTask;

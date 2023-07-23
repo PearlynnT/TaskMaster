@@ -93,10 +93,12 @@ function Notification ( {dropDown, toggle} ) {
             ) : (
                 <div>
                     {notifications.map((notif) => (
-                        <div>
+                        <div className='notif'>
                             {notif.senderName} sent you an invite to join {notif.projectName}
-                            <button onClick={() => handleAccept(notif._id, notif.projectId, notif.receipientId)}>Accept</button>
-                            <button onClick={() => handleDecline(notif._id)}>Decline</button>
+                            <span className="notification--buttons">
+                              <button className="notification--accept" onClick={() => handleAccept(notif._id, notif.projectId, notif.receipientId)}>Accept</button>
+                              <button className="notification--decline" onClick={() => handleDecline(notif._id)}>Decline</button>
+                            </span>
                         </div>
                     ))}
                 </div>

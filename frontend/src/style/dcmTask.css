@@ -1,4 +1,4 @@
-.modal--open {
+.modal--open--task {
     position: absolute; /* Stay in place */
     z-index: 1; /* Sit on top */
     width: 350px;
@@ -10,6 +10,7 @@
     align-items: center;
     justify-content: space-around;
     border: 1px solid black;
+    right: 1%;
 }
 
 
