@@ -232,10 +232,13 @@ function Stats() {
 
     return (
         <>
-            <h2>Total active projects: {activeProjs}</h2>
+            {
+            /**<h2>Total active projects: {activeProjs}</h2>
             <h2>Total completed projects: {completedProjs}</h2>
             <h2>Total active tasks: {activeTasks}</h2>
             <h2>Total completed tasks: {completedTasks}</h2>
+            **/
+            }
             <Box
                 id="chart"
                 flex={1}

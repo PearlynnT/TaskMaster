@@ -77,17 +77,11 @@ function Home() {
             signal: controller.signal,
           }
         );
-        let arr = [];
         const ownProject = data.filter((item) => (item.owner === user));
-        if (ownProject.length !== 0) {
-          arr.push(ownProject);
-        }
         const membProject = data.filter((item) => (checkMembers(item.members)));
-        if (membProject.length !== 0) {
-          arr.push(membProject);
-        }
+        const arr = [...ownProject, ...membProject]; 
         if (isMounted) {
-          setProjects(arr[0]);
+          setProjects(arr);
         }
       } catch (err) {
         console.log(err);
@@ -100,7 +94,7 @@ function Home() {
       isMounted = false;
       controller.abort();
     };
-  }, [flag]);
+  }, [flag, toggleCount]);
   
   return (
     <div>

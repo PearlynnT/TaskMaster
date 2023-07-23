@@ -24,13 +24,11 @@ function Profile() {
                     signal: controller.signal,
                 });
                 const currentUser = data.filter((item) => item.username === currUser);
-                console.log(currentUser);
                 if (isMounted) {
                     if (currentUser[0].avatar === "") { // for first time login users 
                         navigate("/avatarSelection", { replace: true });
                     }
                     setAvatar(currentUser[0].avatar)
-                    console.log(`Avatar: ${avatar}`);
                 }
             } catch (err) {
                 console.log(err);
