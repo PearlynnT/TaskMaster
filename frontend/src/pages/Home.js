@@ -96,14 +96,9 @@ function Home() {
 
     getUser().then(() => getProjects());
 
-    const interval = setInterval(() => {
-        getProjects();
-    }, 5000);
-
     return () => {
       isMounted = false;
       controller.abort();
-      clearInterval(interval);
     };
   }, [flag]);
   

@@ -40,3 +40,24 @@
     height: 170px;
 }
 
+/* Mobile styles */
+@media (max-width: 768px) {
+    .avatar--header {
+        font-size: 40px;
+        margin: 20px;
+    }
+    
+    .avatar--container {
+        height: auto;
+        padding: 20px;
+    }
+    
+    .avatar--image {
+        width: 120px;
+        margin: 5px;
+    }
+    
+    .avatar--buttons {
+        margin: 20px;
+    }
+}
