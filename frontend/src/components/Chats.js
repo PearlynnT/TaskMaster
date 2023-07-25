@@ -134,7 +134,6 @@ function Chats({ projects }) {
             } catch (err) {
                 console.log(err);
             }
-            setProjId(null);
             setSend(null);
             socket.emit("send_message", messageData);
             setMessageList((list) => [...list, messageData]);
