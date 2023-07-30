@@ -178,11 +178,11 @@ function ProjectCreation() {
                             placeholder = 'Add members'
                             required
                         />
-                        <button type="submit" className='createProject'>Create Project</button>
+                        <button className='createProject'>Create Project</button>
                     </form>
                 </section>
             )}
-            <div>{!success ? <Link to="/"><span style={{color: '#6988F6', textDecoration: 'underline'}}>Home Page</span></Link> : <></>}</div>
+            <button onClick={() => navigate("/", { replace: true })} className="avatar--confirm">Home Page</button>
         </div>
     )
 }

@@ -4,7 +4,7 @@ import '../style/avatarSelection.css';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import axios from '../api/axios';
 import ClipLoader from "react-spinners/ClipLoader";
-import { useNavigate} from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
 function AvatarSelection() {
@@ -36,7 +36,6 @@ function AvatarSelection() {
       }
     };
   
-
     useEffect(() => {
       let isMounted = true;
       const controller = new AbortController();
@@ -145,6 +144,7 @@ function AvatarSelection() {
             <div className="avatar--buttons">
                 <button onClick={refresh} className="avatar--refresh">Refresh</button>
                 <button onClick={confirm} className="avatar--confirm">Confirm</button>
+                <button onClick={() => navigate("/", { replace: true })} className="avatar--confirm">Home Page</button>
             </div>
         </div>
     )

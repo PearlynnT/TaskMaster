@@ -6,7 +6,7 @@ import editIcon from '../icon/edit.png';
 import { Completed, NotCompleted } from './Status';
 import Priority from './Priority';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import DcmTask from './DcmTask';
+import DeleteConfirmationModal from './DeleteConfirmationModal';
 
 function Task(props) {
     const axiosPrivate = useAxiosPrivate();
@@ -99,7 +99,7 @@ function Task(props) {
                     <button className='task--button' onClick={handleDelete}><img className='task--delete' src={deleteIcon} alt='Delete Button' /></button>
                 </div>
             </div>
-            <DcmTask isOpen={deleteToggle} onCancel={onCancel} onConfirm={() => onConfirm(props._id)} />
+            <DeleteConfirmationModal isOpen={deleteToggle} onCancel={onCancel} onConfirm={() => onConfirm(props._id)} />
         </div>
         
     );

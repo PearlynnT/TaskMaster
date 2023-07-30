@@ -179,11 +179,11 @@ function TaskCreation() {
                             // showYearDropdown
                             // scrollableMonthYearDropdown
                         />
-                        <button type="submit" className='addTask'>Add Task</button>
+                        <button className='addTask'>Add Task</button>
                     </form>
                 </section>
                 )}
-            <Link to="/"><span style={{color: '#6988F6', textDecoration: 'underline'}}>Home Page</span></Link>
+            <button onClick={() => navigate("/", { replace: true })} className="avatar--confirm">Home Page</button>
         </div>
     )
 }
