@@ -1,3 +1,7 @@
+Deployed website link: [https://task-master-app-vut5.onrender.com](https://task-master-app-vut5.onrender.com)
+
+Project Readme: [Orbital.MS3.pdf](https://github.com/PearlynnT/TaskMaster/files/12318098/Orbital.MS3.pdf)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
